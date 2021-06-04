@@ -297,6 +297,8 @@ Error message and password prompt
 
 <li>$:/state/toc/CodeCafe-task-223190714</li>
 
+<li>$:/state/toc/CodeCafe-zest-223190714</li>
+
 <li>$:/state/toc/CodeCafe/задачи-LHD-RV-задачи--619712481</li>
 
 <li>$:/state/toc/CodeCafe/code-android--619712481</li>
@@ -351,17 +353,23 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
+<li>В окне дампа памяти у Андрея появляется ошибка</li>
+
 <li>дизассемблер</li>
 
 <li>Директории Android</li>
 
 <li>задачи</li>
 
+<li>Облако тегов - 1</li>
+
 <li>Отображать тип проекта (LHD-RV) при генерации</li>
 
 <li>Проблема с дёрганием дизассемблера в LHD-RV</li>
 
 <li>разное</li>
+
+<li>Разобраться с окном сопроцессора</li>
 
 <li>Смена пароля Meri</li>
 
@@ -429,6 +437,8 @@ Error message and password prompt
 
 <li>views</li>
 
+<li>zest</li>
+
 </ul>
 </p>
 
@@ -447,7 +457,7 @@ Error message and password prompt
 <pre>&lt;&lt;list-links &quot;[tag[-data-disassemble]sort[title]]&quot;&gt;&gt;
 </pre>
 </div>
-<div created="20210603093156549" modified="20210603094059957" tags="[[Отображать тип проекта (LHD-RV) при генерации]]" title="$:/_cpa/Data/todos">
+<div created="20210603093156549" modified="20210604152122690" tags="[[Отображать тип проекта (LHD-RV) при генерации]] [[Разобраться с окном сопроцессора]] [[В окне дампа памяти у Андрея появляется ошибка]]" title="$:/_cpa/Data/todos">
 <pre></pre>
 </div>
 <div created="20210601142439155" modified="20210601142439155" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/advanced-search">
@@ -11975,8 +11985,8 @@ Error message and password prompt
 <div created="20210603083336622" modified="20210603083336622" title="$:/state/tab/moresidebar-1850697562">
 <pre>$:/core/ui/MoreSideBar/Plugins</pre>
 </div>
-<div created="20210601142236932" modified="20210603093957517" title="$:/state/tab/sidebar--595412856">
-<pre>$:/core/ui/SideBar/Recent</pre>
+<div created="20210601142236932" modified="20210604100626948" title="$:/state/tab/sidebar--595412856">
+<pre>CodeCafe</pre>
 </div>
 <div created="20210602141535668" modified="20210602141536996" title="$:/state/tab2--1311305590">
 <pre>android</pre>
@@ -11984,7 +11994,7 @@ Error message and password prompt
 <div created="20210602140213588" modified="20210602140717715" title="$:/state/tab2-1422387773">
 <pre>LHD-RV: дампы памяти</pre>
 </div>
-<div created="20210602141529428" modified="20210603095516774" title="$:/state/tab2-2058192071">
+<div created="20210602141529428" modified="20210604110332024" title="$:/state/tab2-2058192071">
 <pre>projects</pre>
 </div>
 <div created="20210603084225271" modified="20210603092003493" title="$:/state/tab2-678259293">
@@ -12068,6 +12078,9 @@ Error message and password prompt
 <div created="20210603084732806" modified="20210603084734407" title="$:/state/toc/CodeCafe-task-223190714">
 <pre>close</pre>
 </div>
+<div created="20210604110503337" modified="20210604110503337" title="$:/state/toc/CodeCafe-zest-223190714">
+<pre>open</pre>
+</div>
 <div created="20210601144247060" modified="20210601151753059" title="$:/state/toc/CodeCafe/задачи-LHD-RV-задачи--619712481">
 <pre>close</pre>
 </div>
@@ -12119,7 +12132,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div created="20210603120152901" list="Home [[Проблема с дёрганием дизассемблера в LHD-RV]]" modified="20210603120156252" title="$:/StoryList">
+<div created="20210604150703707" list="[[Chandra - assembly]] Home" modified="20210604152449554" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12325,6 +12338,9 @@ Error message and password prompt
     }
 }</pre>
 </div>
+<div created="20210604152052311" modified="20210604152118371" title="В окне дампа памяти у Андрея появляется ошибка">
+<pre>id view xMemoryView у LHD и LHD-RV был один и тот же</pre>
+</div>
 <div created="20210603091623335" modified="20210603091743422" tags="views LHD LHD-RV" title="дизассемблер">
 <pre>&lt;&lt;list-links &quot;[tag[дизассемблер]sort[title]]&quot;&gt;&gt;
 </pre>
@@ -12344,10 +12360,24 @@ Error message and password prompt
 
 &lt;/div&gt;</pre>
 </div>
+<div created="20210603152704922" modified="20210603154359612" tags="" title="Облако тегов - 1">
+<pre>&lt;style&gt;
+.cloud { margin-right: 7px; }
+.cloud .tc-tag-list-item { margin-right: 0; }
+&lt;/style&gt;
+&lt;$list filter=&quot;[tags[]!is[system]sort[title]]&quot; &gt;
+&lt;span class=&quot;cloud&quot;&gt;
+&lt;span class='tag' &gt;&lt;$transclude tiddler=&quot;$:/core/ui/TagTemplate&quot;/&gt;
+&lt;$count filter=&quot;[all[current]tagging[]]&quot;/&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;/$list&gt;
+
+</pre>
+</div>
 <div created="20210603092730831" modified="20210603095222158" tags="" title="Отображать тип проекта (LHD-RV) при генерации">
 <pre>Отображение типа проекта (LHD-RV/LHD) при замене старого существующего проекта при генерации из .lhd-файла</pre>
 </div>
-<div created="20210603082221728" modified="20210603121450605" tags="task LHD-RV дизассемблер" title="Проблема с дёрганием дизассемблера в LHD-RV">
+<div created="20210603082221728" modified="20210603122736388" tags="task LHD-RV дизассемблер" title="Проблема с дёрганием дизассемблера в LHD-RV">
 <pre>`Суть проблемы`: дизассемблер возвращает некорректную позицию по адресу 16777216 (0x1000000)
 
 (Элемент AddressRangePosition, fValid=false)
@@ -12423,24 +12453,30 @@ org.eclipse.cdt.dsf.debug.internal.ui.disassembly.`DisassemblyBackendDsf`
 
 fCallback.getPositionOfAddress возвращает некорректную позицию (pos, fValid=false) при address=16777216
 
-				if (p == null || !p.containsAddress(address)) {
+```java
+if (p == null || !p.containsAddress(address)) {
 					p = fCallback.getPositionOfAddress(address);
 				}
-				
-				&gt;&gt;&gt;
-				
-`DisassemblyPart`:			
+```
+
+	
+					
+`&gt;&gt;&gt;` DisassemblyPart:			
 фк-ция getPositionOfAddress
+
+```
 fDocument.getPositionOfAddress(address);
+```
 
 
-&gt;&gt;&gt;
-
-DisassemblyDocument
+			
+`&gt;&gt;&gt;` DisassemblyDocument
 
 фк-ция getPositionOfAddress
 
+```
 List&lt;Position&gt; positions = getDocumentManagedPositions().get(category);
+```
 
 возвращает список с одной некорректной позицией
 </pre>
@@ -12451,6 +12487,13 @@ List&lt;Position&gt; positions = getDocumentManagedPositions().get(category);
 &lt;&lt;toc-selective-expandable 'разное'&gt;&gt;
 
 &lt;/div&gt;</pre>
+</div>
+<div created="20210604150708505" modified="20210604151346427" title="Разобраться с окном сопроцессора">
+<pre>Был указан тип памяти : `XRAM` (переменная MEM_TYPE в CoprocessorXram). Я временно заменила на `RAM-TCM`.
+
+Не отображаются дампы памяти:
+в списке регистров надо передавать `MOD_SIZE` и `HASH_MODE` (фк-ция setRegisters в CoprocessorRegisters)
+</pre>
 </div>
 <div created="20210602105858645" modified="20210602105956094" tags="meri" title="Смена пароля Meri">
 <pre>Смена пароля
@@ -12552,9 +12595,24 @@ $(currentTiddler)$
 
 </pre>
 </div>
-<div created="20210603083811964" modified="20210603084138046" tags="$:/tags/Stylesheet zest" title="Coffee css">
+<div created="20210603083811964" modified="20210604110517817" tags="$:/tags/Stylesheet zest" title="Coffee css" type="text/css">
 <pre>.lua.hljs, .elixir.hljs{
 max-height:300px;
+}
+
+.xcloud code{
+margin: 0px 0px 0px -15px;
+z-index:1000;
+position:relative;
+background:#444;
+padding:0px 5px;
+font-weight:bold;
+font-size:13px;
+border-radius:10px;
+}
+
+.tc-tab-buttons {
+    margin-bottom: -1px;
 }</pre>
 </div>
 <div _canonical_uri="https://daidalvi.github.io/ja/images/coffee/1a52174bc1bf2efc5d19346faf890d38.jpg" created="20210602084606160" modified="20210602084650935" tags="eimg" title="Coffee1.jpg" type="image/jpeg">
@@ -12713,12 +12771,19 @@ file:///X:/Doc/%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D1%8B/RiscV/NE32
 
 &lt;/div&gt;</pre>
 </div>
-<div created="20210601143755626" modified="20210602140811381" tags="CodeCafe" title="projects">
+<div created="20210601143755626" modified="20210604110320769" tags="CodeCafe" title="projects">
 <pre>&lt;div class=&quot;zetab_inner&quot;&gt;
 
 &lt;&lt;tabs &quot;[tag[projects]!nsort[title]]&quot; &quot;LHD-RV&quot; &quot;$:/state/tab2&quot;  &quot;tc-vertical&quot;&gt;&gt;
 
-&lt;/div&gt;</pre>
+&lt;/div&gt;
+
+&lt;$list filter=&quot;[tag[projects]tagging[]tags[]!is[system]sort[title]]&quot; &gt;
+&lt;span class=&quot;xcloud&quot;&gt;
+&lt;$transclude tiddler=&quot;$:/core/ui/TagTemplate&quot;/&gt;
+&lt;code&gt;&lt;$count filter=&quot;[all[current]tagging[]]&quot;/&gt;&lt;/code&gt;
+&lt;/span&gt;
+&lt;/$list&gt;</pre>
 </div>
 <div created="20210601151030581" modified="20210601151134509" tags="разное" title="Sigma-3">
 <pre>* 25.02 
@@ -12748,9 +12813,10 @@ file:///X:/Doc/%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D1%8B/RiscV/NE32
 Макрос todo: [[checklist]]
 </pre>
 </div>
-<div created="20210603094957531" modified="20210603095531726" tags="todo LHD-RV" title="Todo LHD-RV">
+<div created="20210603094957531" modified="20210604084547921" tags="todo LHD-RV" title="Todo LHD-RV">
 <pre>* {{Разобраться с окном сопроцессора||checklist}}
-* {{Отображать тип проекта (LHD-RV) при генерации||checklist}}</pre>
+* {{Отображать тип проекта (LHD-RV) при генерации||checklist}}
+* {{В окне дампа памяти у Андрея появляется ошибка||checklist}}</pre>
 </div>
 <div created="20210603091750286" modified="20210603091801951" tags="eclipse" title="views">
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
@@ -12758,6 +12824,9 @@ file:///X:/Doc/%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D1%8B/RiscV/NE32
 &lt;&lt;toc-selective-expandable 'views'&gt;&gt;
 
 &lt;/div&gt;</pre>
+</div>
+<div created="20210604100636459" modified="20210604100637596" tags="CodeCafe" title="zest">
+<pre></pre>
 </div>
 
 
