@@ -401,11 +401,11 @@ Error message and password prompt
 
 <li>задачи</li>
 
-<li>Криптосервер - handshake &amp; login</li>
-
 <li>Криптосервис</li>
 
 <li>Криптосервис - задачи</li>
+
+<li>Криптосервис - handshake &amp; login</li>
 
 <li>Облако тегов - 1</li>
 
@@ -12260,7 +12260,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div created="20210831123214131" list="[[Криптосервер - handshake &amp; login]] [[Установка Msgpack для php под Lamp debian в virtualbox]] [[Turnkey Lamp]] Home" modified="20210831130239691" title="$:/StoryList">
+<div created="20210831130625069" list="[[Криптосервис - handshake &amp; login]] Home" modified="20210831130640156" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12488,9 +12488,49 @@ Error message and password prompt
 
 &lt;/div&gt;</pre>
 </div>
-<div created="20210831130316573" modified="20210831130506989" tags="php handshake" title="Криптосервер - handshake &amp; login">
-<pre>
-```php
+<div created="20210826160123310" modified="20210826161007467" tags="[[Пак Звезда]]" title="Криптосервис">
+<pre>Прежде, чем посылать другие команды, надо выполнить
+[[handshake]]:&lt;br /&gt;
+Версия - `1.8.0`
+
+Пути:
+
+```
+ D:\mikron\distr\Zvezda\1.08\cs
+```
+
+
+* CryptoService.exe
+* [[crypto_service.ini]]
+
+
+</pre>
+</div>
+<div created="20210831115833307" modified="20210831120720489" tags="задачи Криптосервис" title="Криптосервис - задачи">
+<pre>Все интерфейсы описаны в `src/apps/Zvezda/crypto_service/api`. 
+Там есть: 
+
+* app_service.zdl 
+* app_feedback.zdl
+* radio_service.zdl
+* radio_feedback.zdl 
+
+Идентификаторы функций – это порядковый номер функций, начиная сверху. 
+
+Документ: `doc/utils/rpc/RPC Technology.docx` (Глава 2 Язык описания интерфейса)
+
+Основные функции:
+
+#	AppService.SendData
+#	AppFeedback.ReceiveData
+#	RadioService.ReceiveMsg
+#	RadioFeedback.SendMsg
+
+Этого набора функций достаточно, чтобы организовать взаимодействие между клиентом и сервером. Все остальные функции (в т.ч. сущности Notification) предлагаю пока что проигнорировать.
+</pre>
+</div>
+<div created="20210831130316573" modified="20210831130724005" tags="php handshake Криптосервис" title="Криптосервис - handshake &amp; login">
+<pre>```php
 &lt;?php 
 $host = &quot;10.0.3.2&quot;; //&quot;10.0.3.15&quot;;
 $port = isset($_GET['port'])? $_GET['port'] : 10005; //10005;
@@ -12536,47 +12576,6 @@ socket_close($socketOut);
 ?&gt;
 
 ```
-</pre>
-</div>
-<div created="20210826160123310" modified="20210826161007467" tags="[[Пак Звезда]]" title="Криптосервис">
-<pre>Прежде, чем посылать другие команды, надо выполнить
-[[handshake]]:&lt;br /&gt;
-Версия - `1.8.0`
-
-Пути:
-
-```
- D:\mikron\distr\Zvezda\1.08\cs
-```
-
-
-* CryptoService.exe
-* [[crypto_service.ini]]
-
-
-</pre>
-</div>
-<div created="20210831115833307" modified="20210831120720489" tags="задачи Криптосервис" title="Криптосервис - задачи">
-<pre>Все интерфейсы описаны в `src/apps/Zvezda/crypto_service/api`. 
-Там есть: 
-
-* app_service.zdl 
-* app_feedback.zdl
-* radio_service.zdl
-* radio_feedback.zdl 
-
-Идентификаторы функций – это порядковый номер функций, начиная сверху. 
-
-Документ: `doc/utils/rpc/RPC Technology.docx` (Глава 2 Язык описания интерфейса)
-
-Основные функции:
-
-#	AppService.SendData
-#	AppFeedback.ReceiveData
-#	RadioService.ReceiveMsg
-#	RadioFeedback.SendMsg
-
-Этого набора функций достаточно, чтобы организовать взаимодействие между клиентом и сервером. Все остальные функции (в т.ч. сущности Notification) предлагаю пока что проигнорировать.
 </pre>
 </div>
 <div created="20210603152704922" modified="20210603154359612" tags="" title="Облако тегов - 1">
