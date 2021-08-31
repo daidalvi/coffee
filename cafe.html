@@ -463,6 +463,8 @@ Error message and password prompt
 
 <li>crypto_service.ini</li>
 
+<li>Draft 2 of 'AppService' by zeid</li>
+
 <li>Draft of 'AppService' by zeid</li>
 
 <li>eclipse</li>
@@ -12291,7 +12293,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210831134543989" creator="zeid" list="$:/plugins/tiddlywiki/highlight [[Криптосервис - задачи]] [[Криптосервис - api]] AppService SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831143903393" modifier="zeid" title="$:/StoryList">
+<div created="20210831134543989" creator="zeid" list="$:/plugins/tiddlywiki/highlight [[Криптосервис - задачи]] [[Криптосервис - api]] [[Draft 2 of 'AppService' by zeid]] SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831143903393" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12537,11 +12539,11 @@ Error message and password prompt
 
 </pre>
 </div>
-<div created="20210831115833307" creator="zeid" modified="20210831144010546" modifier="zeid" tags="задачи Криптосервис" title="Криптосервис - задачи">
+<div created="20210831115833307" creator="zeid" modified="20210831144136650" modifier="zeid" tags="задачи Криптосервис" title="Криптосервис - задачи">
 <pre>Все интерфейсы описаны в [[src/apps/Zvezda/crypto_service/api|Криптосервис - api]]. 
 Там есть: 
 
-* [[app_service.zdl|AppService]]
+* [[app_service.zdl]]
 * app_feedback.zdl
 * radio_service.zdl
 * radio_feedback.zdl 
@@ -13105,6 +13107,140 @@ api.admin_feedback_ports = localhost:10011, localhost:10012
 Интересуют все, кроме тех, где admin.
 
 По IN - вызов функции, по OUT - прием ее параметров</pre>
+</div>
+<div created="20210831143313296" creator="zeid" draft.of="AppService" draft.title="AppService" modified="20210831144116509" modifier="zeid" tags="zdl [[Криптосервис - api]]" title="Draft 2 of 'AppService' by zeid">
+<pre>
+
+```
+enum class Functions { 
+	PostData = 1, 
+	SendData = 2, 
+	GetCertificate = 3, 
+	GetPublicKey = 4, 
+	GetClientCertificate = 5, 
+	GetClientPublicKey = 6, 
+};
+```
+zdl
+
+```markdown
+# API которое предоставляет криптосервис для приложения. Через данное API приложение обращается к клиентам.
+# Пользователем данного API является подсистема, обеспечивающая взаимодействие с приложением 
+# Для функционирования криптосервиса в составе криптосервера необходимо открыть соединение для обслуживания данного API.
+Api AppService
+
+Version = 1.8.0
+
+# Отправить данные клиенту с подтверждением доставки. Данные буферизуются криптосервисом до момента выхода клиента на связь 
+# (до синхронной сессии). Клиент, которому посылаются данные, должен быть активирован.
+# Как только от клиента придет подтверждение доставки данных, сервер отправляет уведомление о доставке (AppFeedback.DataStateChanged)
+# В случае передачи данных размером более MAX_DATA_SIZE  данные автоматически разделяются на порции размером не более MAX_DATA_SIZE 
+# и отправляются последовательно в режиме chaining. Функция возвращает ID задания. 
+# Этот параметр будет передаваться приложению в уведомлениях о статусе отправки данных (AppFeedback.DataStateChanged)
+Function PostData
+	In
+		client_id : U32		# ID клиента
+		downlink_data : Binary	# Данные для отправки
+		enc : Bool		# Требуется ли шифрование
+	End
+	Out
+		task_id : U32		# ID отложенного задания. Будет отправлен в уведомлении о доставке.
+	End
+	Error
+		CLIENT_NOT_EXIST = 1		# Клиент не зарегистрирован
+	End
+End
+
+# Отправка данных клиенту без подтверждения доставки. Данные отправляются незамедлительно.
+# В процессе обработки команды сервер отправляет команду RadioFeedback.ProcessDownlinkMessage.
+# При получении такой команды радиоподсистема должна инициировать отправку Crisp - сообщения клиенту.
+# Если клиент находятся в синхронной сессии, то функция завершится с ошибкой CLIENT_IN_SYNC. В этом случае у пользователя есть несколько вариантов:
+# 	- Переотправить через некоторое время, когда клиент завершит синхронную сессию
+#	- Отправкить сообщение через PostData. В этом случае оно будет отправлено после выполнения всех ранее добавленных отложенных заданий
+# Если длина сообщения превышает максимально возможную, то функция вернет ошибку INCORRECT_DATA_LEN.
+# В этом случае сообщение необходимо либо разбить на часть на уровне приложения, либо отправить функцией PostData, которая поддерживает
+# данные любой длины 
+Function SendData
+	In
+		client_id : U32		# ID клиента
+		downlink_data : Binary	# Данные для отправки
+		enc : Bool		# Требуется ли шифрование
+	End
+	Error
+		CLIENT_NOT_EXIST = 1		# Клиент не зарегистрирован
+		CLIENT_NOT_ACTIVATED = 2 	# Клиент не активирован
+		CLIENT_IN_SYNC = 3		# Клиент в сихронной сессии
+		INCORRECT_DATA_LEN = 4		# Длина данных превышает максимально возможную
+		ACCESS_DENIED = 100,		# Не выполнениы требования по безопасности
+		SM_ERROR = 101			# Ошибка модуля безопасности
+	End
+End
+
+# Получение сертификата от криптосервиса
+Function GetCertificate
+   	In
+   		server_key_id : U32 # ID ключа сервера (извлекается из сообщения AppFeedback.ReceiveData)
+	End
+	Out
+		cert : Binary # Сертификат в формате X.509
+	End
+	Error
+		KEY_NOT_FOUND = 1	# Ключ не найден
+		CERT_NOT_LOADED = 2	# Ключ существует, но сертификат на него не загружен
+	End
+End
+
+# Получение &quot;сырого&quot; открытого ключа от криптосервиса
+Function GetPublicKey
+   	In
+   		server_key_id : U32 # ID ключа сервера (извлекается из сообщения AppFeedback.ReceiveData)
+	End
+	Out
+		key_value : Binary # Сырое значение открытого ключа
+	End
+	Error
+		KEY_NOT_FOUND = 1	# Ключ не найден 
+	End
+End
+
+# Получение сертификата ключа клиента Kds.cc
+# В функцию должны быть переданы значения client_id, client_key_version, полученные из AppFeedback.ReceiveData.
+Function GetClientCertificate
+   	In
+   		client_id : U32 # ID клиента 
+		key_version : U32 # Версия ключа клиента. Значение по умолчанию 0 не допускается.
+	End
+	Out
+		cert : Binary # Сертификат в формате X.509
+	End
+	Error
+		KEY_NOT_FOUND = 1	# Ключ не найден (версия ключа отсутствует или клиент не зарегистрирован)
+		CERT_NOT_LOADED = 2	# Ключ существует, но сертификат на него не загружен
+	End
+End
+
+# Получение &quot;сырого&quot; открытого ключа клиента ds.cc определенной версии
+# В функцию должны быть переданы значения client_id, client_key_version, полученные из AppFeedback.ReceiveData.
+Function GetClientPublicKey
+   	In
+   		client_id : U32 # ID клиента 
+		key_version : U32 # Версия ключа клиента. Значение по умолчанию 0 не допускается.
+	End
+	Out
+		key_value : Binary # Сырое значение открытого ключа
+	End
+	Error
+		KEY_NOT_FOUND = 1	# Ключ не найден (версия ключа отсутствует или клиент не зарегистрирован)
+	End
+End
+
+
+End
+
+
+
+```
+</pre>
 </div>
 <div created="20210831143800730" creator="zeid" draft.title="src/apps/Zvezda/crypto_service/api" modified="20210831143800730" modifier="zeid" title="Draft of 'AppService' by zeid">
 <pre></pre>
