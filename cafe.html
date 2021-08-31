@@ -411,6 +411,8 @@ Error message and password prompt
 
 <li>Криптосервис - задачи</li>
 
+<li>Криптосервис - информация</li>
+
 <li>Криптосервис - api</li>
 
 <li>Криптосервис - handshake &amp; login</li>
@@ -12293,7 +12295,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210831134543989" creator="zeid" list="$:/plugins/tiddlywiki/highlight [[Криптосервис - задачи]] [[Криптосервис - api]] AppService SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831144138025" modifier="zeid" title="$:/StoryList">
+<div created="20210831134543989" creator="zeid" list="[[Криптосервис - информация]] $:/plugins/tiddlywiki/highlight [[Криптосервис - задачи]] AppService SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831144730638" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12563,6 +12565,15 @@ Error message and password prompt
 #	RadioFeedback.SendMsg
 
 Этого набора функций достаточно, чтобы организовать взаимодействие между клиентом и сервером. Все остальные функции (в т.ч. сущности Notification) предлагаю пока что проигнорировать.
+</pre>
+</div>
+<div created="20210831145156074" creator="zeid" modified="20210831145327753" modifier="zeid" tags="Криптосервис" title="Криптосервис - информация">
+<pre>Коммуникационный пакет для исходящего сообщения имеет вид:
+
+```css
+PKG_TYPE : U16 + MSG_ID : U16 + FUNC_ID : U16 + PARAMS_LEN : U32 + [IN_PARAMS : tuple]
+
+```
 </pre>
 </div>
 <div created="20210831143909705" creator="zeid" modified="20210831143912065" modifier="zeid" tags="Криптосервис" title="Криптосервис - api">
