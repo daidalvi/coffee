@@ -447,6 +447,8 @@ Error message and password prompt
 
 <li>android</li>
 
+<li>app_feedback.zdl</li>
+
 <li>app_service.zdl</li>
 
 <li>AppService</li>
@@ -12295,7 +12297,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210831134543989" creator="zeid" list="[[Криптосервис - информация]] [[Криптосервис - задачи]] AppFeedback AppService app_service.zdl SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831145559681" modifier="zeid" title="$:/StoryList">
+<div created="20210831134543989" creator="zeid" list="[[Криптосервис - информация]] [[Криптосервис - задачи]] app_feedback.zdl AppFeedback AppService SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831145617897" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12912,6 +12914,57 @@ var_dump(bin2hex( $msg));
 &lt;&lt;toc-selective-expandable 'android'&gt;&gt;
 
 &lt;/div&gt;</pre>
+</div>
+<div created="20210831145632192" creator="zeid" modified="20210831145651750" modifier="zeid" tags="zdl" title="app_feedback.zdl">
+<pre>
+
+```properties
+# API, которое должно предоставляться криптосервису для отправки данных приложению. Через данное API расшифрованные данные передаются приложению.
+# Провайдером данного API является подсистема, которая обеспечивает взаимодействие криптосервиса с сервером прилоожения.
+# Для функционирования криптосервиса в составе криптосервера необходимо открыть соединение для обслуживания данного API.
+Api AppFeedback
+
+Version = 1.8.0
+
+# Получение данных от криптоклиента
+Function ReceiveData
+	In
+		client_id : U32			# ID клиента
+		uplink_data : Binary		# Данные, полученные от клиента
+
+		client_key_version : U32	# Версия ключа клиента для проверки подписи
+		client_ds : Binary		# Подпись клиента
+
+		server_asym_key_id : U32	# ID ключа сервера для проверки подписи
+		server_ds : Binary		# Подпись сервера
+	End
+	Error
+		APP_ERROR = 1			# Общая ошибка подсистемы работы с приложениями
+		UNKNOWN_COMMAND = 2		# Неизвестная команда
+	End
+End
+
+# Уведомление об изменения статуса отправки данных.
+# Параметр task_id служит для идентификации передаваемых данных. Криптосервис вернет тот task_id, который был передан при отправке данных
+# функциями (ServerApplicationApi.ProcessDownlinkData, ServerApplicationApi.BroadcastData)
+Notification DataStateChanged
+
+	# Состояние отправки данных
+	Enum State
+		DATA_DELIVERED = 1		# Получено подтверждение доставки
+		DATA_DELIVERY_FAILED = 2	# Доставка сообщения не осуществлена
+	End
+	In
+		client_id : U32			# ID клиента
+		state : State			# Состояние отправки данных
+		task_id : U32			# ID задания (соответствует ID, которое было передано при инициации передачи данных)
+	End
+End
+
+
+End
+```
+</pre>
 </div>
 <div created="20210831144146479" creator="zeid" modified="20210831145432121" modifier="zeid" tags="zdl" title="app_service.zdl">
 <pre>```properties
