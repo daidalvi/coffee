@@ -493,6 +493,8 @@ Error message and password prompt
 
 <li>Python bytes&lt;-&gt;hex</li>
 
+<li>Python socket client</li>
+
 <li>Python socket server</li>
 
 <li>Sigma-3</li>
@@ -12096,7 +12098,7 @@ Error message and password prompt
 <div created="20210602140213588" modified="20210602140717715" title="$:/state/tab2-1422387773">
 <pre>LHD-RV: дампы памяти</pre>
 </div>
-<div created="20210830101055416" modified="20210831130238179" title="$:/state/tab2-1422432489">
+<div created="20210830101055416" modified="20210831134604316" title="$:/state/tab2-1422432489">
 <pre>php</pre>
 </div>
 <div created="20210602141529428" modified="20210830112717716" title="$:/state/tab2-2058192071">
@@ -12267,7 +12269,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div list="[[Python bytes&lt;-&gt;hex]] Home" title="$:/StoryList">
+<div created="20210831134543989" list="[[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831134543989" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -13168,6 +13170,53 @@ bytearray.fromhex(&quot;92a561646d696ea561646d696e&quot;)
 `bytearray(b'\x92\xa5admin\xa5admin')`
 
 
+</pre>
+</div>
+<div created="20210831134632759" modified="20210831134700334" tags="python socket" title="Python socket client">
+<pre>
+```python
+import socket
+import sys
+
+HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+PORT = 10005        # Port to listen on (non-privileged ports are &gt; 1023)
+PORT_OUT = 10006
+
+# Create a TCP/IP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect the socket to the port where the server is listening
+server_address = (HOST, PORT)
+print ('connecting in to %s port %s' % server_address)
+sock.connect(server_address)
+
+sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print ('connecting out to %s port %s' % (HOST, PORT_OUT))
+sock2.connect((HOST, PORT_OUT))
+
+try:
+    
+    # Send data
+    message = '00 F1 00 00 00 00 00 00 00 12 01 00 01 00 08 0C 41 64 6D 69 6E 53 65 72 76 69 63 65'.replace(&quot; &quot;, &quot;&quot;)
+    #'00F1 0000 0000 00000012 01 00010008 OC 41646d696e53657276696365'.replace(&quot; &quot;, &quot;&quot;)
+    print ('sending &quot;%s&quot;' % message)
+    #sock.send(message.encode())
+    sock.send(bytearray.fromhex(message))
+
+    # Look for the response
+    amount_received = 0
+    amount_expected = len(message)
+    
+    while amount_received &lt; amount_expected:
+        data = sock2.recv(2)
+        amount_received += len(data)
+        print ('received &quot;%s&quot;' % data)
+
+finally:
+    print ('closing socket')
+    sock.close()
+    sock2.close()
+```
 </pre>
 </div>
 <div created="20210826162333910" modified="20210826162402523" tags="python socket" title="Python socket server">
