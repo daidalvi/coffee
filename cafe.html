@@ -12904,22 +12904,8 @@ var_dump(bin2hex( $msg));
 
 &lt;/div&gt;</pre>
 </div>
-<div created="20210831144146479" creator="zeid" modified="20210831144153834" modifier="zeid" tags="zdl" title="app_service.zdl">
-<pre>
-
-```
-enum class Functions { 
-	PostData = 1, 
-	SendData = 2, 
-	GetCertificate = 3, 
-	GetPublicKey = 4, 
-	GetClientCertificate = 5, 
-	GetClientPublicKey = 6, 
-};
-```
-zdl
-
-```markdown
+<div created="20210831144146479" creator="zeid" modified="20210831144204212" modifier="zeid" tags="zdl" title="app_service.zdl">
+<pre>```markdown
 # API которое предоставляет криптосервис для приложения. Через данное API приложение обращается к клиентам.
 # Пользователем данного API является подсистема, обеспечивающая взаимодействие с приложением 
 # Для функционирования криптосервиса в составе криптосервера необходимо открыть соединение для обслуживания данного API.
