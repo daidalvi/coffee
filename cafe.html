@@ -461,8 +461,6 @@ Error message and password prompt
 
 <li>crypto_service.ini</li>
 
-<li>Draft of 'Криптосервис - задачи' by zeid</li>
-
 <li>Draft of 'AppService' by zeid</li>
 
 <li>eclipse</li>
@@ -12291,7 +12289,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210831134543989" creator="zeid" list="$:/plugins/tiddlywiki/highlight [[Draft of 'Криптосервис - задачи' by zeid]] AppService SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831143745185" modifier="zeid" title="$:/StoryList">
+<div created="20210831134543989" creator="zeid" list="$:/plugins/tiddlywiki/highlight [[Криптосервис - задачи]] AppService SendData [[Криптосервис - handshake &amp; login]] [[Python socket client]] [[Python socket server]] [[Python bytes&lt;-&gt;hex]] Home" modified="20210831143745185" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12537,8 +12535,8 @@ Error message and password prompt
 
 </pre>
 </div>
-<div created="20210831115833307" modified="20210831132044381" tags="задачи Криптосервис" title="Криптосервис - задачи">
-<pre>Все интерфейсы описаны в `src/apps/Zvezda/crypto_service/api`. 
+<div created="20210831115833307" creator="zeid" modified="20210831143815866" modifier="zeid" tags="задачи Криптосервис" title="Криптосервис - задачи">
+<pre>Все интерфейсы описаны в [[src/apps/Zvezda/crypto_service/api]]. 
 Там есть: 
 
 * app_service.zdl 
@@ -13102,32 +13100,6 @@ api.admin_feedback_ports = localhost:10011, localhost:10012
 Интересуют все, кроме тех, где admin.
 
 По IN - вызов функции, по OUT - прием ее параметров</pre>
-</div>
-<div created="20210831115833307" creator="zeid" draft.of="Криптосервис - задачи" draft.title="Криптосервис - задачи" modified="20210831143742453" modifier="zeid" tags="задачи Криптосервис" title="Draft of 'Криптосервис - задачи' by zeid">
-<pre>Все интерфейсы описаны в [[src/apps/Zvezda/crypto_service/api]]. 
-Там есть: 
-
-* app_service.zdl 
-* app_feedback.zdl
-* radio_service.zdl
-* radio_feedback.zdl 
-
-Идентификаторы функций – это порядковый номер функций, начиная сверху. 
-
-Документы `doc/utils/rpc`: 
-
-* &lt;a target=&quot;_blank&quot; href=&quot;https://docs.google.com/document/d/11gEqebJ5DZnJArUtad3bpxqDJeQXSZQx/edit?usp=sharing&amp;ouid=115096596089886901273&amp;rtpof=true&amp;sd=true&quot;&gt;RPC technology.docx&lt;/a&gt;
-* &lt;a target=&quot;_blank&quot; href=&quot;https://docs.google.com/document/d/1HtpwbORJq6kVyCH_CK1WvFi-DE5ziPNO/edit?usp=sharing&amp;ouid=115096596089886901273&amp;rtpof=true&amp;sd=true&quot;&gt;Примеры вызовов функций криптосервиса.docx&lt;/a&gt;
-
-Основные функции:
-
-#	AppService.SendData
-#	AppFeedback.ReceiveData
-#	RadioService.ReceiveMsg
-#	RadioFeedback.SendMsg
-
-Этого набора функций достаточно, чтобы организовать взаимодействие между клиентом и сервером. Все остальные функции (в т.ч. сущности Notification) предлагаю пока что проигнорировать.
-</pre>
 </div>
 <div created="20210831143800730" creator="zeid" draft.title="src/apps/Zvezda/crypto_service/api" modified="20210831143800730" modifier="zeid" title="Draft of 'AppService' by zeid">
 <pre></pre>
