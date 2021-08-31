@@ -401,6 +401,8 @@ Error message and password prompt
 
 <li>задачи</li>
 
+<li>Криптосервер - handshake</li>
+
 <li>Криптосервис</li>
 
 <li>Криптосервис - задачи</li>
@@ -12258,7 +12260,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div created="20210831123214131" list="[[Установка Msgpack для php под Lamp debian в virtualbox]] [[Turnkey Lamp]] Home" modified="20210831130239691" title="$:/StoryList">
+<div created="20210831123214131" list="[[Криптосервер - handshake]] [[Установка Msgpack для php под Lamp debian в virtualbox]] [[Turnkey Lamp]] Home" modified="20210831130239691" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12485,6 +12487,56 @@ Error message and password prompt
 &lt;&lt;toc-selective-expandable 'задачи'&gt;&gt;
 
 &lt;/div&gt;</pre>
+</div>
+<div created="20210831130316573" modified="20210831130351364" tags="php handshake" title="Криптосервер - handshake">
+<pre>
+```php
+&lt;?php 
+$host = &quot;10.0.3.2&quot;; //&quot;10.0.3.15&quot;;
+$port = isset($_GET['port'])? $_GET['port'] : 10005; //10005;
+$portOut = isset($_GET['portOut'])? $_GET['portOut'] : 10006; //10006;
+
+echo &quot;Meri: Opening socket $host on $port&lt;br /&gt;&quot;; 
+
+$socket = socket_create(AF_INET, SOCK_STREAM, 0) or die(&quot;Could not create socket\n&quot;);
+//socket_set_option($socket,SOL_SOCKET, SO_RCVTIMEO, array(&quot;sec&quot;=&gt;5, &quot;usec&quot;=&gt;0));
+$socketOut = socket_create(AF_INET, SOCK_STREAM, 0) or die(&quot;Could not create socket\n&quot;);
+
+
+$result = socket_connect($socket, $host, $port) or die(&quot;Could not connect toserver\n&quot;);
+$resultOut = socket_connect($socketOut, $host, $portOut) or die(&quot;Could not connect toserver\n&quot;);
+
+
+$message=str_replace(&quot; &quot;, &quot;&quot;, &quot;00F1 0000 0000 00000012 01 00010008 0C 41646d696e53657276696365&quot;);
+//$message=str_replace(&quot; &quot;, &quot;&quot;, &quot;00 F1 00 00 00 00 00 00 00 12 01 00 01 00 08 0C 41 64 6D 69 6E 53 65 72 76 69 63 65&quot;);
+
+$hex = hex2bin($message);
+
+socket_write($socket, $hex, strlen($hex)) or die(&quot;Could not send data to server\n&quot;);
+
+echo &quot;write: &quot;.$message.&quot;&lt;br /&gt;\n&quot;;
+
+$line = socket_read($socketOut, 2048);
+
+echo $line. &quot;&lt;br /&gt;\n&quot;;
+
+/*********** LOGIN *****************/
+
+$hex = hex2bin(str_replace(&quot; &quot;, &quot;&quot;, &quot;0001 0001 0001 0000000D 92a561646d696ea561646d696e&quot;));
+socket_write($socket, $hex, strlen($hex)) or die(&quot;Could not send data to server\n&quot;);
+
+echo &quot;write Login: &quot;.$hex.&quot;&lt;br /&gt;\n&quot;;
+
+$line = socket_read($socketOut, 2048);
+
+echo $line. &quot;&lt;br /&gt;\n&quot;;
+
+socket_close($socket);
+socket_close($socketOut);
+?&gt;
+
+```
+</pre>
 </div>
 <div created="20210826160123310" modified="20210826161007467" tags="[[Пак Звезда]]" title="Криптосервис">
 <pre>Прежде, чем посылать другие команды, надо выполнить
