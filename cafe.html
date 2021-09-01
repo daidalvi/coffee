@@ -533,6 +533,8 @@ Error message and password prompt
 
 <li>Криптосервис - handshake &amp; login</li>
 
+<li>Криптосервис - php пример</li>
+
 <li>Криптосервис - задачи</li>
 
 <li>Криптосервис - информация</li>
@@ -12347,7 +12349,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210901115720273" creator="zeid" list="[[Тестовые сообщения - receiveMsg и receiveData]] RadioService AppFeedback Home" modified="20210901120849878" modifier="zeid" title="$:/StoryList">
+<div created="20210901115720273" creator="zeid" list="[[Криптосервис - php пример]] [[Криптосервис - handshake &amp; login]] [[Тестовые сообщения - receiveMsg и receiveData]] RadioService AppFeedback Home" modified="20210901145420927" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -13475,6 +13477,354 @@ echo $line. &quot;&lt;br /&gt;\n&quot;;
 socket_close($socket);
 socket_close($socketOut);
 ?&gt;
+
+```
+</pre>
+</div>
+<div created="20210901145426593" creator="zeid" modified="20210901145515444" modifier="zeid" tags="php handshake Криптосервис" title="Криптосервис - php пример">
+<pre>
+```php
+&lt;?php 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+/*
+
+# порты для API (в формат [IN, OUT])
+api.radio_service_ports = localhost:10001, localhost:10002
+api.app_service_ports = localhost:10003, localhost:10004
+api.admin_service_ports = localhost:10005, localhost:10006
+api.radio_feedback_ports = localhost:10007, localhost:10008
+api.app_feedback_ports = localhost:10009, localhost:10010
+api.admin_feedback_ports = localhost:10011, localhost:10012
+
+*/
+
+/*$pkgType=array(
+    &quot;out&quot;=&gt;array(
+        &quot;func&quot;=&gt;&quot;1&quot;,
+        &quot;info&quot;=&gt;&quot;3&quot;
+        &quot;service&quot;=&gt;&quot;F1&quot;
+    ),
+    &quot;in&quot;=&gt;array(
+        &quot;responce&quot;=&gt;&quot;2&quot;,
+        &quot;info&quot;=&gt;&quot;2&quot;
+        &quot;service&quot;=&gt;&quot;F2&quot;
+    ),
+)
+
+Вызов функции 0x0001
+Уведомление 0x0003
+Служебный запрос 0x00F1
+Входящий
+
+
+Ответ 0x0002
+Служебный ответ 0x00F2*/
+
+
+class Zvezda {
+
+    private $host = &quot;10.0.2.2&quot;;
+    private $pTypes=array(&quot;Service&quot;, &quot;Feedback&quot;);
+    private $pNames = array(&quot;Radio&quot;, &quot;App&quot;, &quot;Admin&quot;);
+    private $pBase = 10000;
+
+    private $sockets = array();
+
+    /*function __construct() { }*/
+
+    function open($pName, $pType){
+
+        foreach (array(&quot;in&quot;, &quot;out&quot;) as &amp;$inOut) {
+
+            $port = $this-&gt;getPort($pName, $pType, $inOut);
+
+            $this-&gt;msg(&quot;Opening socket $pName$pType at &quot;.$this-&gt;host.&quot; on $port&quot;); 
+    
+            $socket = socket_create(AF_INET, SOCK_STREAM, 0) or die(&quot;Could not create socket: $port\n&quot;);
+            $result = socket_connect($socket, $this-&gt;host, $port) or die(&quot;Could not connect toserver: $port\n&quot;);
+
+            if(!isset($this-&gt;sockets[$pName]))
+                $this-&gt;sockets[$pName]=array();
+            if(!isset($this-&gt;sockets[$pName][$pType]))
+                $this-&gt;sockets[$pName][$pType]=array();
+
+            $this-&gt;sockets[$pName][$pType][$inOut]=$socket;
+        }
+    }
+
+    function getPort($pName, $pType, $inOut){
+        $mod = ($inOut==&quot;in&quot;)? -1: 0;
+        $res = $mod + ((array_search($pName, $this-&gt;pNames)+1) + array_search($pType, $this-&gt;pTypes)*3) * 2;
+        return $this-&gt;pBase + $res;
+    }
+
+    function getSocket($pName, $pType, $inOut){
+        if(!isset($this-&gt;sockets[$pName][$pType])){
+            $this-&gt;msg(&quot;No sockets for $pName$pType&quot;, 1);
+            return NULL;
+        }
+        return $this-&gt;sockets[$pName][$pType][$inOut];
+    }
+
+    function close($pName, $pType){
+
+        foreach (array(&quot;in&quot;, &quot;out&quot;) as &amp;$inOut) {
+            $s = $this-&gt;getSocket($pName, $pType, $inOut);
+            if($s){
+                $this-&gt;msg(&quot;Closing socket $pName$pType: &quot;.$this-&gt;getPort($pName, $pType, $inOut));
+                socket_close($s);
+            }
+        }
+    }
+
+    function msg($txt, $type=0, $style=0){
+        $fin = isset($_GET[&quot;html&quot;])? &quot;&lt;br /&gt;&quot; : &quot;\n&quot;;
+        echo $txt.$fin; 
+    }
+
+    function xLen($str, $size){
+     return sprintf(&quot;%0&quot;.$size.&quot;X&quot;, strlen($str)/2);
+    }
+
+    function sRead($pName, $pType){
+        $sOut = $this-&gt;getSocket($pName, $pType, &quot;out&quot;);
+        if($sOut){
+            $this-&gt;msg(&quot;TRY Read from $pName$pType &quot;.$this-&gt;getPort($pName, $pType, &quot;out&quot;));
+
+            $line = socket_read($sOut, 2048);
+            $this-&gt;msg(&quot;Read from $pName$pType &quot;.$this-&gt;getPort($pName, $pType, &quot;out&quot;).&quot;: &quot; .bin2hex($line));
+            return $line;
+        }
+    }
+    function sWrite($pName, $pType, $message){
+        $sIn = $this-&gt;getSocket($pName, $pType, &quot;in&quot;);
+        if(!$sIn){
+            return;
+        }
+        $this-&gt;msg(&quot;Write to $pName$pType &quot;.$this-&gt;getPort($pName, $pType, &quot;in&quot;).&quot;: &quot;.$message);
+        $hex = hex2bin($message);
+        socket_write($sIn, $hex, strlen($hex)) or die(&quot;Could not send data to server\n&quot;);
+        
+    }
+
+    function handshake($pName, $pType){
+
+        $rcpVer=&quot;01&quot;;
+        $apiVer=&quot;00010008&quot;;
+        $apiName = bin2hex($pName.$pType);
+    
+        $inParams = $rcpVer.$apiVer.$this-&gt;xLen($apiName, 2).$apiName;
+    
+        $message=str_replace(&quot; &quot;, &quot;&quot;, &quot;00F1 0000 0000&quot;.$this-&gt;xLen($inParams, 8).$inParams);
+        //00F1 0000 0000 00000012 01 00010008 0C 41646d696e53657276696365
+        
+        $this-&gt;sWrite($pName, $pType, $message);
+        $line = $this-&gt;sRead($pName, $pType);
+    }
+
+    /* 
+    
+    PKG_TYPE : U16 + MSG_ID : U16 + FUNC_ID : U16 + PARAMS_LEN : U32 + [IN_PARAMS : tuple]
+    
+    */
+    function pkgMsg($pkgType, $msgId, $funcId, $msg){
+        return sprintf(&quot;%04X&quot;, $pkgType).sprintf(&quot;%04X&quot;, $msgId).
+        sprintf(&quot;%04X&quot;, $funcId).$this-&gt;xLen($msg, 8).$msg;
+    }
+    function funMsg($msgId, $funcId, $msg){
+        return $this-&gt;pkgMsg(1, $msgId, $funcId, $msg);
+    }
+    
+    
+    function login($pName, $pType, $msgId){
+    
+        $data = array(&quot;admin&quot;, &quot;admin&quot;);
+        $msg = bin2hex(msgpack_pack($data));
+        
+        //0001 0001 0001 0000000D 92a561646d696ea561646d696e
+        $message = $this-&gt;funMsg($msgId, 1, $msg); 
+        
+        $this-&gt;sWrite($pName, $pType, $message);
+        $line = $this-&gt;sRead($pName, $pType);
+    
+    }
+
+    /*
+    Function SendData
+        In
+            client_id : U32		# ID клиента
+            downlink_data : Binary	# Данные для отправки
+            enc : Bool		# Требуется ли шифрование
+        End
+        Error
+            CLIENT_NOT_EXIST = 1		# Клиент не зарегистрирован
+            CLIENT_NOT_ACTIVATED = 2 	# Клиент не активирован
+            CLIENT_IN_SYNC = 3		# Клиент в сихронной сессии
+            INCORRECT_DATA_LEN = 4		# Длина данных превышает максимально возможную
+            ACCESS_DENIED = 100,		# Не выполнениы требования по безопасности
+            SM_ERROR = 101			# Ошибка модуля безопасности
+        End
+    End
+
+    # Отправка исходящего сообщения от криптосервера клиенту
+    Function SendMsg
+        In
+            client_id : U32		# ID клиента
+            downlink_msg : Binary	# Crisp-сообщение для отправки клиенту
+        End
+        Error
+            COMMUNICATION_ERROR = 1, # Общая ошибка подсистемы коммуникаций с клиентом
+            UNKNOWN_COMMAND = 2	 # Неизвестная команда
+        End
+    End
+
+    End
+
+
+        Sending package of API RadioFeedback
+        RawPkg:    00 01 00 04 00 01 00 00 00 1F  |  92 CE 00 00 00 01 C4 17 00 00 82 85       
+                01 00 00 00 01 00 00 04 00 00 02 00 31 32 33 02 3D 59 9C
+        Type:      1 (Function Call)
+        MsgId:     4
+        FuncId:    1 (SendMsg)
+        CrispInfo:
+        ClientID:     00000001
+        ServSeqNum:   000004
+        ClientSeqNum: 000002
+        PS:           00 ( от сервера )
+
+    */
+    function send($msgId){
+    
+        $data = array(&quot;00000001&quot;, decbin(123), False);
+        $msg = bin2hex(msgpack_pack($data));
+        //$this-&gt;msg(&quot;MPACK1: &quot;.$msg);
+        //$msg = str_replace(&quot; &quot;, &quot;&quot;, &quot;93 CE 00 00 00 01 C4 03 31 32 33 C2&quot;);
+        $msg = str_replace(&quot; &quot;, &quot;&quot;, &quot;93 01 AB 31 30 30 31 31 30 31 30 30 31 30 C2&quot;);
+        
+
+        //$this-&gt;msg(&quot;MPACK2: &quot;.$msg);
+
+        //0001 0001 0001 0000000D 92a561646d696ea561646d696e
+        $message = $this-&gt;funMsg($msgId, 2, $msg); 
+        
+        $this-&gt;sWrite(&quot;App&quot;, &quot;Service&quot;, $message);
+
+
+        $line = $this-&gt;sRead(&quot;Radio&quot;, &quot;Feedback&quot;);
+
+        // new $msgId - get from line
+
+        $this-&gt;sWrite(&quot;Radio&quot;, &quot;Feedback&quot;, str_replace(&quot; &quot;, &quot;&quot;, &quot;00 02&quot;.sprintf(&quot;%04X&quot;, $msgId).&quot;00 00 00 00 00 00&quot;));
+        $line = $this-&gt;sRead(&quot;App&quot;, &quot;Service&quot;);
+
+
+    }
+
+    function receive($msgId){
+        // ReceiveMsg = 1
+        $msg = str_replace(&quot; &quot;, &quot;&quot;, &quot;91 C4 17 00 00 81 85 01 00 00 00 01 00 00 00 00 00 02 80 28 04 D7 AD F3 7F 82&quot;);
+        $message = $this-&gt;funMsg($msgId, 1, $msg); 
+        $this-&gt;sWrite(&quot;Radio&quot;, &quot;Service&quot;, $message);
+        $line = $this-&gt;sRead(&quot;App&quot;, &quot;Feedback&quot;);
+        $this-&gt;sWrite(&quot;App&quot;, &quot;Feedback&quot;, str_replace(&quot; &quot;, &quot;&quot;, &quot;00 02&quot;.sprintf(&quot;%04X&quot;, $msgId).&quot;00 00 00 00 00 00&quot;));
+        $line = $this-&gt;sRead(&quot;Radio&quot;, &quot;Service&quot;);
+    }
+
+    function receive2($msgId){
+        // ReceiveMsg = 1
+        $msg = str_replace(&quot; &quot;, &quot;&quot;, &quot;91 C4 17 00 00 81 85 01 00 00 00 02 00 00 00 00 00 01 84 3C 0D 52 EC C4 EE F5&quot;);
+        $message = $this-&gt;funMsg($msgId, 1, $msg); 
+        $this-&gt;sWrite(&quot;Radio&quot;, &quot;Service&quot;, $message);
+
+        $line = $this-&gt;sRead(&quot;App&quot;, &quot;Feedback&quot;);
+        $this-&gt;sWrite(&quot;App&quot;, &quot;Feedback&quot;, str_replace(&quot; &quot;, &quot;&quot;, &quot;00 02&quot;.sprintf(&quot;%04X&quot;, $msgId).&quot;00 00 00 00 00 00&quot;));
+
+
+        // 91 C4 15 00 00 82 85 01 00 00 00 02 00 00 01 00 00 01 01 00 96 0C 27 46
+        $line = $this-&gt;sRead(&quot;Radio&quot;, &quot;Feedback&quot;);
+        $this-&gt;sWrite(&quot;Radio&quot;, &quot;Feedback&quot;, str_replace(&quot; &quot;, &quot;&quot;, &quot;00 02&quot;.sprintf(&quot;%04X&quot;, $msgId).&quot;00 00 00 00 00 00&quot;));
+
+        $line = $this-&gt;sRead(&quot;Radio&quot;, &quot;Service&quot;);
+    }
+
+
+    function loginScenario(){
+        $this-&gt;open(&quot;Admin&quot;, &quot;Service&quot;);
+        $this-&gt;handshake(&quot;Admin&quot;, &quot;Service&quot;);
+        $this-&gt;login(&quot;Admin&quot;, &quot;Service&quot;, 1);
+        $this-&gt;close(&quot;Admin&quot;, &quot;Service&quot;);
+    }
+
+    function sendScenario(){
+        $this-&gt;open(&quot;App&quot;, &quot;Service&quot;);
+        $this-&gt;open(&quot;Radio&quot;, &quot;Feedback&quot;);
+        
+        $this-&gt;handshake(&quot;App&quot;, &quot;Service&quot;);
+        $this-&gt;handshake(&quot;Radio&quot;, &quot;Feedback&quot;);
+        
+        $this-&gt;send(1);
+        
+        $this-&gt;close(&quot;App&quot;, &quot;Service&quot;);
+        $this-&gt;close(&quot;Radio&quot;, &quot;Feedback&quot;);
+    }
+
+    function receiveScenario(){
+        $this-&gt;open(&quot;Radio&quot;, &quot;Service&quot;);
+        $this-&gt;open(&quot;App&quot;, &quot;Feedback&quot;);
+        
+        $this-&gt;handshake(&quot;Radio&quot;, &quot;Service&quot;);
+        $this-&gt;handshake(&quot;App&quot;, &quot;Feedback&quot;);
+        
+        $this-&gt;receive(1);
+        
+        $this-&gt;close(&quot;Radio&quot;, &quot;Service&quot;);
+        $this-&gt;close(&quot;App&quot;, &quot;Feedback&quot;);
+    }
+
+    function receiveScenario2(){
+        $this-&gt;open(&quot;Radio&quot;, &quot;Service&quot;);
+        $this-&gt;open(&quot;App&quot;, &quot;Feedback&quot;);
+        $this-&gt;open(&quot;Radio&quot;, &quot;Feedback&quot;);
+        
+        $this-&gt;handshake(&quot;Radio&quot;, &quot;Service&quot;);
+        $this-&gt;handshake(&quot;App&quot;, &quot;Feedback&quot;);
+        $this-&gt;handshake(&quot;Radio&quot;, &quot;Feedback&quot;);
+
+
+        $this-&gt;receive2(1);
+        
+        $this-&gt;close(&quot;Radio&quot;, &quot;Service&quot;);
+        $this-&gt;close(&quot;App&quot;, &quot;Feedback&quot;);
+        $this-&gt;close(&quot;Radio&quot;, &quot;Feedback&quot;);
+       
+    }
+ }
+
+
+$zvezda = new Zvezda();
+// $zvezda-&gt;receiveScenario2();
+$msg = str_replace(&quot; &quot;, &quot;&quot;, &quot;91 C4 17 00 00 81 85 01 00 00 00 02 00 00 00 00 00 01 84 3C 0D 52 EC C4 EE F5&quot;);
+var_dump(msgpack_unpack($msg));
+
+/*$m = str_replace(&quot; &quot;, &quot;&quot;, &quot;00 00 81 85 01 00 00 00 01 00 00 00 00 00 01 80 3D BC B8 47 FB B3 FF&quot;);
+
+echo bin2hex(msgpack_pack($m));
+echo &quot;\n\n&quot;;
+
+$x = str_split(hex2bin($m));
+var_dump($x);
+echo bin2hex(msgpack_pack(array(&quot;a&quot;,&quot;b&quot;)));*/
+
+/*$x = msgpack_unpack(str_replace(&quot; &quot;, &quot;&quot;,&quot;91 C4 17 00 00 81 85 01 00 00 00 01 00 00 00 00 00 01 80 3D BC B8 47 FB B3 FF&quot;));
+var_dump($x);*/
+//$m = str_replace(&quot; &quot;, &quot;&quot;, &quot;00 00 81 85 01 00 00 00 01 00 00 00 00 00 01 80 3D BC B8 47 FB B3 FF&quot;);
+//$x = str_split(hex2bin($m));
+//$m = str_replace(&quot; &quot;, &quot;&quot;, &quot;00 00 81 85 01 00 00 00 01 00 00 00 00 00 01 80 3D BC B8 47 FB B3 FF&quot;);
+//var_dump(bin2hex(msgpack_pack(array(array(&quot;00&quot;,&quot;00&quot;)))));
+//$msg = explode(&quot;&quot;,  &quot;00 00 81 85 01 00 00 00 01 00 00 00 00 00 01 80 3D BC B8 47 FB B3 FF&quot;);
 
 ```
 </pre>
