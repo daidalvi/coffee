@@ -491,6 +491,8 @@ Error message and password prompt
 
 <li>Python socket server</li>
 
+<li>radio_service.zdl</li>
+
 <li>Sigma-3</li>
 
 <li>task</li>
@@ -12343,7 +12345,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div list="[[Тестовые сообщения - receiveMsg и receiveData]] Home" title="$:/StoryList">
+<div created="20210901115720273" creator="zeid" list="radio_service.zdl [[Тестовые сообщения - receiveMsg и receiveData]] RadioService AppFeedback Home" modified="20210901120849878" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -13163,6 +13165,50 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             conn.sendall(data + data[:1])
+```
+</pre>
+</div>
+<div created="20210901120834981" creator="zeid" modified="20210901120911228" modifier="zeid" tags="zdl" title="radio_service.zdl">
+<pre>
+
+```properties
+# API которое предоставляет криптосервис для получения сообщений от клиентов.
+# Пользователем данного API является подсистема, обеспечивающая коммуникацию с клиентами, зарегистрированными в криптосервисе.
+# Для функционирования криптосервиса в составе криптосервера необходимо открыть соединение для обслуживания данного API.
+Api RadioService
+
+Version = 1.8.0
+
+# Обработка входящего сообщения от клиента
+# В начале выполнения команды сервер проверяет следующие условия:
+# - Клиент должен быть зарегистрирован
+# - Клиент должен быть активирован
+# - Структура Crisp-сообщения должна быть корректна
+# - Если активен синхронный режим работы, то пришедшее сообщение должно быть с признаком синхронного режима (по правилам протокола только сервер имеет право завершать синхронный режим)
+# - Счетчик должен отвечать следующим требованиям: 
+#	- Значение счетчика клиента должно быть большим чем значение счетчика клиента предыдущего сообщения. 
+#	- При синхронном режиме счетчик сервера должен быть равным значению счетчика сервера последнего отправленного сообщения.
+# - Корректность типа сообщения. В асинхронном режиме возможен прием только пользовательских сообщений. В синхронном режиме возможен прием как сервисных, так и пользовательских сообщений.
+# Если какие-либо из вышеперечисленных условий не выполнены, то команда вернет ошибку. Состояние криптобиблиотеки не изменяется и никакие уведомления не посылаются сервером.
+Function ReceiveMsg
+	In 
+		uplink_msg : Binary 	# Crisp-сообщение от клиента
+	End
+	Error
+		CLIENT_NOT_EXIST = 1,		# Клиент не зарегистрирован
+		CLIENT_NOT_ACTIVATED = 2, 	# Клиент не активирован
+		INCORRECT_HEADER = 3, 		# Некорректный заголовок сообщения
+		INCORRECT_LEN = 3, 		# Некорректная длина сообщения
+		INCORRECT_COUNTERS = 4, 	# Некорректные счетчики
+		INCORRECT_PROT_STATE = 5, 	# Некорректное состояние протокола для принятия данной команды
+		CRYPTO_ERROR = 6, 		# Ошибка криптографии
+		ACCESS_DENIED = 100,		# Не выполнениы требования по безопасности
+		SM_ERROR = 101			# Ошибка модуля безопасности
+	End		
+End
+
+End
+
 ```
 </pre>
 </div>
