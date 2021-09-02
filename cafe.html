@@ -13893,7 +13893,7 @@ PKG_TYPE : U16 + MSG_ID : U16 + FUNC_ID : U16 + PARAMS_LEN : U32 + [IN_PARAMS : 
 <div created="20210603092730831" modified="20210603095222158" tags="" title="Отображать тип проекта (LHD-RV) при генерации">
 <pre>Отображение типа проекта (LHD-RV/LHD) при замене старого существующего проекта при генерации из .lhd-файла</pre>
 </div>
-<div created="20210902110111815" creator="zeid" modified="20210902120455615" modifier="zeid" tags="Криптосервис info CRISP" title="ПАК «Звезда» Примеры вызовов функций криптосервиса">
+<div created="20210902110111815" creator="zeid" modified="20210902121002637" modifier="zeid" tags="Криптосервис info CRISP" title="ПАК «Звезда» Примеры вызовов функций криптосервиса">
 <pre>Теоретическая база
 Состав ПАК «Звезда»:
 
@@ -13973,6 +13973,8 @@ FuncId:   &lt;C&gt; (&lt;имя функции&gt;)
 * Type, MsgId, FuncId – парсинг заголовка для более понятного восприятия сообщений.
 
 Некоторые сообщения будут содержать CRISP-сообщения
+
+```properties
 RawPkg:   &lt;RPC Header&gt;  | &lt;RPC Message&gt;
 Type:      1 (Function Call)
 MsgId:     &lt;B&gt;
@@ -13983,19 +13985,27 @@ ClientID:     &lt;D&gt; (идентификатор клиента)
             ClientSeqNum: &lt;F&gt; (счётчик сообщений клиента)
             PS:           &lt;G&gt; (информационный байт)
 
+```
 
-App Service API: Send Data
+
+!! App Service API: Send Data
+
 Отправка сообщения без подтверждения от сервера приложений клиенту.
-Сервер приложений отправляет запрос криптосервису на отправку данных («123», ASCII) без подтверждения клиенту с ClientID = 1 через функцию SendData из AppService API.
 
+1) Сервер приложений отправляет запрос криптосервису на отправку данных («123», ASCII) без подтверждения клиенту с ClientID = 1 через функцию SendData из AppService API.
+
+```properties
 Receiving package of API AppService
 RawPkg:    00 01 00 03 00 02 00 00 00 0C  |  93 CE 00 00 00 01 C4 03 31 32 33 C2
 Type:      1 (Function Call)
         MsgId:     3
         FuncId:    2 (SendData)
 
-Криптосервис вызывает функцию SendMsg у транспортного прокси через RadioFeedback API и передаёт ему зашифрованное сообщение.
+```
 
+2) Криптосервис вызывает функцию SendMsg у транспортного прокси через RadioFeedback API и передаёт ему зашифрованное сообщение.
+
+```properties
 Sending package of API RadioFeedback
 RawPkg:    00 01 00 04 00 01 00 00 00 1F  |  92 CE 00 00 00 01 C4 17 00 00 82 85       
            01 00 00 00 01 00 00 04 00 00 02 00 31 32 33 02 3D 59 9C
@@ -14007,15 +14017,18 @@ ClientID:     00000001
 ServSeqNum:   000004
 ClientSeqNum: 000002
 PS:           00 ( от сервера )
+```
 
 
 
+!! Radio Service API: Receive Msg
 
-Radio Service API: Receive Msg
 Отправка сообщения без подтверждения от клиента серверу приложений.
-Транспортный прокси принимает сообщение («123», ASCII) от клиента с 
+
+1) Транспортный прокси принимает сообщение («123», ASCII) от клиента с 
 ClientID = 1 из канала связи и передаёт на обработку криптосервису через функцию ReceiveMsg из RadioService API.
 
+```properties
 Receiving package of API RadioService
 RawPkg:    00 01 00 03 00 01 00 00 00 1A  |  91 C4 17 00 00 81 85 01 00 00 00 01 
            00 00 04 00 00 03 80 F9 BC 37 4D D0 56 62
@@ -14027,16 +14040,18 @@ Type:      1 (Function Call)
             ServSeqNum:   000004
             ClientSeqNum: 000003
             PS:           80 ( от клиента )
+```						
 
-Криптосервис расшифровывает сообщение и отправляет данные серверу приложений через функцию ReceiveData из AppFeedaback API.
+2) Криптосервис расшифровывает сообщение и отправляет данные серверу приложений через функцию ReceiveData из AppFeedaback API.
 
+```properties
 Sending package of API AppFeedback
 RawPkg:    00 01 00 02 00 01 00 00 00 19  |  96 CE 00 00 00 01 C4 03 31 32 33 CE  
            00 00 00 54 C4 00 CE 00 00 00 DA C4 00
 Type:      1 (Function Call)
         MsgId:     2
         FuncId:    1 (ReceiveData)
-</pre>
+```</pre>
 </div>
 <div created="20210826160041292" modified="20210826160908540" tags="projects" title="Пак Звезда">
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
