@@ -14051,8 +14051,16 @@ ClientID:     &lt;D&gt; (идентификатор клиента)
 
 {{App Service API: Send Data &amp;&amp; Receive Msg}}</pre>
 </div>
-<div created="20210826160041292" creator="zeid" modified="20210902121802191" modifier="zeid" tags="projects" title="Пак Звезда">
-<pre>`info`:
+<div created="20210826160041292" creator="zeid" modified="20210902121910638" modifier="zeid" tags="projects" title="Пак Звезда">
+<pre>Коммуникационный пакет для исходящего сообщения имеет вид:
+
+```css
+PKG_TYPE : U16 + MSG_ID : U16 + FUNC_ID : U16 + PARAMS_LEN : U32 + [IN_PARAMS : tuple]
+
+```
+
+
+`info`:
 
 &lt;&lt;list-links &quot;[tag[Криптосервис]tag[info]sort[title]]&quot;&gt;&gt;
 
