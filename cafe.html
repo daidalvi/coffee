@@ -545,13 +545,13 @@ Error message and password prompt
 
 <li>Отображать тип проекта (LHD-RV) при генерации</li>
 
-<li>ПАК «Звезда» Примеры вызовов функций криптосервиса</li>
-
 <li>Пак Звезда</li>
 
 <li>Подключение по сокету из гостевой машины к хосту</li>
 
 <li>Почта</li>
+
+<li>Примеры вызовов функций криптосервиса</li>
 
 <li>Проблема с дёрганием дизассемблера в LHD-RV</li>
 
@@ -12353,7 +12353,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210902110103548" creator="zeid" list="[[Криптосервис - Саша]] [[Пак Звезда]] radio_service.zdl Home" modified="20210902122554074" modifier="zeid" title="$:/StoryList">
+<div created="20210902110103548" creator="zeid" list="[[Примеры вызовов функций криптосервиса]] [[Криптосервис - Саша]] [[Пак Звезда]] radio_service.zdl Home" modified="20210902152459952" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -14031,7 +14031,86 @@ Crisp-сообщение - это не строка, это байты. Их н�
 <div created="20210603092730831" modified="20210603095222158" tags="" title="Отображать тип проекта (LHD-RV) при генерации">
 <pre>Отображение типа проекта (LHD-RV/LHD) при замене старого существующего проекта при генерации из .lhd-файла</pre>
 </div>
-<div created="20210902110111815" creator="zeid" modified="20210902121525287" modifier="zeid" tags="Криптосервис info CRISP" title="ПАК «Звезда» Примеры вызовов функций криптосервиса">
+<div created="20210826160041292" creator="zeid" modified="20210902122503053" modifier="zeid" tags="projects" title="Пак Звезда">
+<pre>Коммуникационный пакет для исходящего сообщения имеет вид:
+
+```css
+PKG_TYPE : U16 + MSG_ID : U16 + FUNC_ID : U16 + PARAMS_LEN : U32 + [IN_PARAMS : tuple]
+
+```
+
+Все интерфейсы описаны в [[src/apps/Zvezda/crypto_service/api|Криптосервис - api]]. 
+
+Идентификаторы функций – это порядковый номер функций, начиная сверху. 
+
+Документы `doc/utils/rpc`: 
+
+* &lt;a target=&quot;_blank&quot; href=&quot;https://docs.google.com/document/d/11gEqebJ5DZnJArUtad3bpxqDJeQXSZQx/edit?usp=sharing&amp;ouid=115096596089886901273&amp;rtpof=true&amp;sd=true&quot;&gt;RPC technology.docx&lt;/a&gt;
+* &lt;a target=&quot;_blank&quot; href=&quot;https://docs.google.com/document/d/1HtpwbORJq6kVyCH_CK1WvFi-DE5ziPNO/edit?usp=sharing&amp;ouid=115096596089886901273&amp;rtpof=true&amp;sd=true&quot;&gt;Примеры вызовов функций криптосервиса.docx&lt;/a&gt;
+
+
+`info`:
+
+&lt;&lt;list-links &quot;[tag[Криптосервис]tag[info]sort[title]]&quot;&gt;&gt;
+
+
+`задачи`:
+
+&lt;&lt;list-links &quot;[tag[Криптосервис]tag[задачи]sort[title]]&quot;&gt;&gt;
+
+`api`:
+
+&lt;&lt;list-links &quot;[tag[Криптосервис]tag[api]sort[title]]&quot;&gt;&gt;
+
+`php`:
+
+&lt;&lt;list-links &quot;[tag[Криптосервис]tag[php]sort[title]]&quot;&gt;&gt;
+
+`zdl`:
+
+&lt;&lt;list-links &quot;[tag[Криптосервис]tag[zdl]sort[title]]&quot;&gt;&gt;
+
+---
+
+&lt;div class=&quot;tc-table-of-contents&quot;&gt;
+
+&lt;&lt;toc-selective-expandable 'Пак Звезда'&gt;&gt;
+
+&lt;/div&gt;</pre>
+</div>
+<div created="20210826154814093" modified="20210826162546387" tags="virtualbox gateway socket" title="Подключение по сокету из гостевой машины к хосту">
+<pre>You can reach your host from your guest by using the default gateway on your VM.
+
+See this answer for an explanation.
+
+By running `netstat -rn` you can get the default gateway and then use that ip address in your config file of your application.
+
+Running `netstat -rn | grep &quot;^0.0.0.0 &quot; | cut -d &quot; &quot; -f10` should give you the correct ip address. (only tested this on my machine)
+
+
+```
+$ netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
+10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
+192.168.33.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
+```
+
+
+https://stackoverflow.com/questions/19933550/how-to-connect-with-host-postgresql-from-vagrant-virtualbox-machine
+
+Адаптеры: Host Only, Nat
+
+Моя реализация:
+
+* [[Php socket client]]
+* [[Python socket server]]</pre>
+</div>
+<div created="20210831142111474" modified="20210831142230319" tags="meri reg" title="Почта">
+<pre>https://mail.niime.ru/owa/</pre>
+</div>
+<div created="20210902110111815" creator="zeid" modified="20210902152508353" modifier="zeid" tags="Криптосервис info CRISP" title="Примеры вызовов функций криптосервиса">
 <pre>Теоретическая база
 Состав ПАК «Звезда»:
 
@@ -14130,85 +14209,6 @@ ClientID:     &lt;D&gt; (идентификатор клиента)
 [[App Service API: Send Data &amp;&amp; Receive Msg]]
 
 {{App Service API: Send Data &amp;&amp; Receive Msg}}</pre>
-</div>
-<div created="20210826160041292" creator="zeid" modified="20210902122503053" modifier="zeid" tags="projects" title="Пак Звезда">
-<pre>Коммуникационный пакет для исходящего сообщения имеет вид:
-
-```css
-PKG_TYPE : U16 + MSG_ID : U16 + FUNC_ID : U16 + PARAMS_LEN : U32 + [IN_PARAMS : tuple]
-
-```
-
-Все интерфейсы описаны в [[src/apps/Zvezda/crypto_service/api|Криптосервис - api]]. 
-
-Идентификаторы функций – это порядковый номер функций, начиная сверху. 
-
-Документы `doc/utils/rpc`: 
-
-* &lt;a target=&quot;_blank&quot; href=&quot;https://docs.google.com/document/d/11gEqebJ5DZnJArUtad3bpxqDJeQXSZQx/edit?usp=sharing&amp;ouid=115096596089886901273&amp;rtpof=true&amp;sd=true&quot;&gt;RPC technology.docx&lt;/a&gt;
-* &lt;a target=&quot;_blank&quot; href=&quot;https://docs.google.com/document/d/1HtpwbORJq6kVyCH_CK1WvFi-DE5ziPNO/edit?usp=sharing&amp;ouid=115096596089886901273&amp;rtpof=true&amp;sd=true&quot;&gt;Примеры вызовов функций криптосервиса.docx&lt;/a&gt;
-
-
-`info`:
-
-&lt;&lt;list-links &quot;[tag[Криптосервис]tag[info]sort[title]]&quot;&gt;&gt;
-
-
-`задачи`:
-
-&lt;&lt;list-links &quot;[tag[Криптосервис]tag[задачи]sort[title]]&quot;&gt;&gt;
-
-`api`:
-
-&lt;&lt;list-links &quot;[tag[Криптосервис]tag[api]sort[title]]&quot;&gt;&gt;
-
-`php`:
-
-&lt;&lt;list-links &quot;[tag[Криптосервис]tag[php]sort[title]]&quot;&gt;&gt;
-
-`zdl`:
-
-&lt;&lt;list-links &quot;[tag[Криптосервис]tag[zdl]sort[title]]&quot;&gt;&gt;
-
----
-
-&lt;div class=&quot;tc-table-of-contents&quot;&gt;
-
-&lt;&lt;toc-selective-expandable 'Пак Звезда'&gt;&gt;
-
-&lt;/div&gt;</pre>
-</div>
-<div created="20210826154814093" modified="20210826162546387" tags="virtualbox gateway socket" title="Подключение по сокету из гостевой машины к хосту">
-<pre>You can reach your host from your guest by using the default gateway on your VM.
-
-See this answer for an explanation.
-
-By running `netstat -rn` you can get the default gateway and then use that ip address in your config file of your application.
-
-Running `netstat -rn | grep &quot;^0.0.0.0 &quot; | cut -d &quot; &quot; -f10` should give you the correct ip address. (only tested this on my machine)
-
-
-```
-$ netstat -rn
-Kernel IP routing table
-Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
-10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
-192.168.33.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
-```
-
-
-https://stackoverflow.com/questions/19933550/how-to-connect-with-host-postgresql-from-vagrant-virtualbox-machine
-
-Адаптеры: Host Only, Nat
-
-Моя реализация:
-
-* [[Php socket client]]
-* [[Python socket server]]</pre>
-</div>
-<div created="20210831142111474" modified="20210831142230319" tags="meri reg" title="Почта">
-<pre>https://mail.niime.ru/owa/</pre>
 </div>
 <div created="20210603082221728" modified="20210603122736388" tags="task LHD-RV дизассемблер" title="Проблема с дёрганием дизассемблера в LHD-RV">
 <pre>`Суть проблемы`: дизассемблер возвращает некорректную позицию по адресу 16777216 (0x1000000)
