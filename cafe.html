@@ -12145,8 +12145,8 @@ Error message and password prompt
 <div created="20210603083336622" modified="20210603083336622" title="$:/state/tab/moresidebar-1850697562">
 <pre>$:/core/ui/MoreSideBar/Plugins</pre>
 </div>
-<div created="20210601142236932" creator="zeid" modified="20210831180757349" modifier="zeid" title="$:/state/tab/sidebar--595412856">
-<pre>CodeCafe</pre>
+<div created="20210601142236932" creator="zeid" modified="20210902121333027" modifier="zeid" title="$:/state/tab/sidebar--595412856">
+<pre>$:/core/ui/SideBar/Recent</pre>
 </div>
 <div created="20210602141535668" creator="zeid" modified="20210831181004809" modifier="zeid" title="$:/state/tab2--1311305590">
 <pre>php</pre>
@@ -12355,7 +12355,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210902110103548" creator="zeid" list="[[ПАК «Звезда» Примеры вызовов функций криптосервиса]] Home [[Криптосервис - информация]]" modified="20210902121107292" modifier="zeid" title="$:/StoryList">
+<div created="20210902110103548" creator="zeid" list="[[ПАК «Звезда» Примеры вызовов функций криптосервиса]] [[App Service API: Send Data &amp;&amp; Receive Msg]] Home [[Криптосервис - информация]]" modified="20210902121232167" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12582,7 +12582,7 @@ Error message and password prompt
 
 &lt;/div&gt;</pre>
 </div>
-<div created="20210902121100067" creator="zeid" modified="20210902121129244" modifier="zeid" tags="Криптосервис info" title="App Service API: Send Data &amp;&amp; Receive Msg">
+<div created="20210902121100067" creator="zeid" modified="20210902121344633" modifier="zeid" tags="[[ПАК «Звезда» Примеры вызовов функций криптосервиса]]" title="App Service API: Send Data &amp;&amp; Receive Msg">
 <pre>!! App Service API: Send Data
 
 Отправка сообщения без подтверждения от сервера приложений клиенту.
@@ -12623,6 +12623,8 @@ PS:           00 ( от сервера )
 1) Транспортный прокси принимает сообщение («123», ASCII) от клиента с 
 ClientID = 1 из канала связи и передаёт на обработку криптосервису через функцию ReceiveMsg из RadioService API.
 
+
+
 ```properties
 Receiving package of API RadioService
 RawPkg:    00 01 00 03 00 01 00 00 00 1A  |  91 C4 17 00 00 81 85 01 00 00 00 01 
@@ -12635,9 +12637,13 @@ Type:      1 (Function Call)
             ServSeqNum:   000004
             ClientSeqNum: 000003
             PS:           80 ( от клиента )
-```						
+```
+
+			
 
 2) Криптосервис расшифровывает сообщение и отправляет данные серверу приложений через функцию ReceiveData из AppFeedaback API.
+
+
 
 ```properties
 Sending package of API AppFeedback
@@ -12646,7 +12652,9 @@ RawPkg:    00 01 00 02 00 01 00 00 00 19  |  96 CE 00 00 00 01 C4 03 31 32 33 CE
 Type:      1 (Function Call)
         MsgId:     2
         FuncId:    1 (ReceiveData)
-```</pre>
+```
+
+</pre>
 </div>
 <div created="20210831145632192" creator="zeid" modified="20210831145651750" modifier="zeid" tags="zdl" title="app_feedback.zdl">
 <pre>```properties
