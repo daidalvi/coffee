@@ -417,6 +417,8 @@ Error message and password prompt
 
 <li>android</li>
 
+<li>App Service API: Send Data &amp;&amp; Receive Msg</li>
+
 <li>app_feedback.zdl</li>
 
 <li>app_service.zdl</li>
@@ -446,6 +448,8 @@ Error message and password prompt
 <li>crypto_service.ini</li>
 
 <li>Draft of 'AppService' by zeid</li>
+
+<li>Draft of 'ПАК «Звезда» Примеры вызовов функций криптосервиса' by zeid</li>
 
 <li>eclipse</li>
 
@@ -12360,7 +12364,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20210902110103548" creator="zeid" list="$:/Import [[ПАК «Звезда» Примеры вызовов функций криптосервиса]] Home [[Криптосервис - информация]]" modified="20210902112034956" modifier="zeid" title="$:/StoryList">
+<div created="20210902110103548" creator="zeid" list="[[App Service API: Send Data &amp;&amp; Receive Msg]] $:/Import [[Draft of 'ПАК «Звезда» Примеры вызовов функций криптосервиса' by zeid]] Home [[Криптосервис - информация]]" modified="20210902121107292" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12586,6 +12590,72 @@ Error message and password prompt
 &lt;&lt;toc-selective-expandable 'android'&gt;&gt;
 
 &lt;/div&gt;</pre>
+</div>
+<div created="20210902121100067" creator="zeid" modified="20210902121129244" modifier="zeid" tags="Криптосервис info" title="App Service API: Send Data &amp;&amp; Receive Msg">
+<pre>!! App Service API: Send Data
+
+Отправка сообщения без подтверждения от сервера приложений клиенту.
+
+1) Сервер приложений отправляет запрос криптосервису на отправку данных («123», ASCII) без подтверждения клиенту с ClientID = 1 через функцию SendData из AppService API.
+
+```properties
+Receiving package of API AppService
+RawPkg:    00 01 00 03 00 02 00 00 00 0C  |  93 CE 00 00 00 01 C4 03 31 32 33 C2
+Type:      1 (Function Call)
+        MsgId:     3
+        FuncId:    2 (SendData)
+
+```
+
+2) Криптосервис вызывает функцию SendMsg у транспортного прокси через RadioFeedback API и передаёт ему зашифрованное сообщение.
+
+```properties
+Sending package of API RadioFeedback
+RawPkg:    00 01 00 04 00 01 00 00 00 1F  |  92 CE 00 00 00 01 C4 17 00 00 82 85       
+           01 00 00 00 01 00 00 04 00 00 02 00 31 32 33 02 3D 59 9C
+Type:      1 (Function Call)
+MsgId:     4
+FuncId:    1 (SendMsg)
+CrispInfo:
+ClientID:     00000001
+ServSeqNum:   000004
+ClientSeqNum: 000002
+PS:           00 ( от сервера )
+```
+
+
+
+!! Radio Service API: Receive Msg
+
+Отправка сообщения без подтверждения от клиента серверу приложений.
+
+1) Транспортный прокси принимает сообщение («123», ASCII) от клиента с 
+ClientID = 1 из канала связи и передаёт на обработку криптосервису через функцию ReceiveMsg из RadioService API.
+
+```properties
+Receiving package of API RadioService
+RawPkg:    00 01 00 03 00 01 00 00 00 1A  |  91 C4 17 00 00 81 85 01 00 00 00 01 
+           00 00 04 00 00 03 80 F9 BC 37 4D D0 56 62
+Type:      1 (Function Call)
+      MsgId:     3
+      FuncId:    1 (ReceiveMsg)
+      CrispInfo:
+      	ClientID:     00000001
+            ServSeqNum:   000004
+            ClientSeqNum: 000003
+            PS:           80 ( от клиента )
+```						
+
+2) Криптосервис расшифровывает сообщение и отправляет данные серверу приложений через функцию ReceiveData из AppFeedaback API.
+
+```properties
+Sending package of API AppFeedback
+RawPkg:    00 01 00 02 00 01 00 00 00 19  |  96 CE 00 00 00 01 C4 03 31 32 33 CE  
+           00 00 00 54 C4 00 CE 00 00 00 DA C4 00
+Type:      1 (Function Call)
+        MsgId:     2
+        FuncId:    1 (ReceiveData)
+```</pre>
 </div>
 <div created="20210831145632192" creator="zeid" modified="20210831145651750" modifier="zeid" tags="zdl" title="app_feedback.zdl">
 <pre>```properties
@@ -12885,6 +12955,103 @@ api.admin_feedback_ports = localhost:10011, localhost:10012
 </div>
 <div created="20210831143800730" creator="zeid" draft.title="src/apps/Zvezda/crypto_service/api" modified="20210831143800730" modifier="zeid" title="Draft of 'AppService' by zeid">
 <pre></pre>
+</div>
+<div created="20210902110111815" creator="zeid" draft.of="ПАК «Звезда» Примеры вызовов функций криптосервиса" draft.title="ПАК «Звезда» Примеры вызовов функций криптосервиса" modified="20210902121100072" modifier="zeid" tags="Криптосервис info CRISP" title="Draft of 'ПАК «Звезда» Примеры вызовов функций криптосервиса' by zeid">
+<pre>Теоретическая база
+Состав ПАК «Звезда»:
+
+# микросхема, интегрируемая в конечное устройство (далее по тексту - [[ЭБ]]).
+# [[криптосервис]].
+# модуль безопасности криптосервиса (далее по тексту [[ЭБКС]]).
+Все остальные компоненты находятся вне зоны ответственности ПАК «Звезда» и реализуются заказчиками и партнёрами.
+
+Существует две заинтересованных стороны взаимодействия: 
+
+# конечное устройство (далее по тексту – клиент).
+# сервер приложений. 
+
+Клиент состоит из:
+
+# контроллера (должен поддерживать протокол); 
+# передатчика (передаёт сообщение в сеть);
+# ЭБ (осуществляет шифрование и расшифрование).
+
+[[Сервер приложений|сервер приложений]] – некоторое стороннее ПО заказчика или партнёра, которое обрабатывает сообщения от клиента на логическом уровне и которое пользуется услугами криптосервиса по шифрованию, расшифрованию сообщений и администрированию клиентов.
+
+Зашифрованные сообщения далее по тексту могут называться [[CRISP]]-сообщения.
+
+* Интерфейсы, предназначенные для обращения к криптосервису, называются AppService API и RadioService API. 
+* Интерфейсы, предназначенные для обращения криптосервиса к внешним сущностям, называются RadioFeedback API и AppFeedback API.
+
+Общая схема положения всех участвующих элементов следующая:
+
+{{criptoservice.png}}
+
+
+
+Синим цветом обозначены элементы вне зоны ответственности ПАК «Звезда». Зелёным цветом обозначены элементы ПАК «Звезда», за которые отвечает НИИМЭ.
+
+Существует два типа сообщений:
+
+# с подтверждением;
+# без подтверждения.
+
+Сообщения с подтверждением требуют некоторых дополнительных сообщений установки и закрытия сессии. Этот процесс управляется криптосервисом и контроллером на стороне клиента.
+
+---
+
+Сценарий отправки сообщения от сервера приложений клиенту:
+
+# сервер приложений вызывает функцию SendData (или PostData) в AppService API криптосервиса и передаёт данные в открытом виде;
+# криптосервис выполняет внутреннюю логику;
+# криптосервис вызывает функцию SendMsg в RadioFeedback API  транспортного прокси и передаёт ему зашифрованные данные;
+# транспортный прокси передаёт сообщение клиенту;
+# клиент передаёт сообщение ЭБ;
+# клиент получает расшифрованное сообщение и выполняет свою бизнес-логику.
+
+Сценарий отправки сообщения от клиента серверу приложений:
+
+# клиент формирует сообщение в открытом виде и направляет его ЭБ;
+# клиент получает зашифрованное сообщение и передаёт в канал связи;
+# транспортный прокси получает сообщение;
+# транспортный прокси вызывает функцию ReceiveMsg в RadioService API криптосервиса и передаёт зашифрованное сообщение криптосервису;
+# криптосервис выполняет свою внутреннюю логику;
+# криптосервис вызывает функцию ReceiveData в AppFeedback API сервера приложений и передаёт расшифрованные данные.
+
+Далее по тексту будет представлен RPC-лог вызовов функций API. Лог пишется от лица криптосервиса. Формат сообщений следующий:
+
+```properties
+&lt;направление сообщения и имя API&gt;
+RawPkg:   &lt;RPC Header&gt; |  &lt;RPC Message&gt;
+Type:     &lt;A&gt; (&lt;тип сообщения&gt;)
+MsgId:    &lt;B&gt; (идентификатор сообщения)
+FuncId:   &lt;C&gt; (&lt;имя функции&gt;)
+```
+
+где
+
+* RawPkg – набор сырых байт, который передаётся по сокетам
+* RpcHeader – заголовок, который описан в документации по RPC (doc/utils/rpc/RPC Technology.docx, Глава 4)
+* RpcMessage – сериализованное сообщение, формат описан в документации по RPC
+* Type, MsgId, FuncId – парсинг заголовка для более понятного восприятия сообщений.
+
+Некоторые сообщения будут содержать CRISP-сообщения
+
+```properties
+RawPkg:   &lt;RPC Header&gt;  | &lt;RPC Message&gt;
+Type:      1 (Function Call)
+MsgId:     &lt;B&gt;
+FuncId:    &lt;C&gt; (&lt;имя функции&gt;)
+CrispInfo:
+ClientID:     &lt;D&gt; (идентификатор клиента)
+            ServSeqNum:   &lt;E&gt; (счётчик сообщений сервера)
+            ClientSeqNum: &lt;F&gt; (счётчик сообщений клиента)
+            PS:           &lt;G&gt; (информационный байт)
+
+```
+
+
+{{New Excision}}</pre>
 </div>
 <div created="20210603091809182" modified="20210603091823534" tags="code" title="eclipse">
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
