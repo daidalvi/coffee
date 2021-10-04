@@ -531,6 +531,8 @@ Error message and password prompt
 
 <li>linux</li>
 
+<li>Making a Vendor for C3</li>
+
 <li>meri</li>
 
 <li>MIDataDisassemble</li>
@@ -12373,7 +12375,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20211004091810686" creator="zeid" list="[[Using the Map Editor - Part 2]] [[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004101948740" modifier="zeid" title="$:/StoryList">
+<div created="20211004091810686" creator="zeid" list="[[Making a Vendor for C3]] [[Using the Map Editor - Part 2]] [[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004101948740" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -14173,6 +14175,337 @@ file:///X:/Doc/%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D1%8B/RiscV/NE32
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
 
 &lt;&lt;toc-selective-expandable 'linux'&gt;&gt;
+
+&lt;/div&gt;</pre>
+</div>
+<div created="20211004103409019" creator="zeid" modified="20211004103431837" modifier="zeid" tags="DS DS-tutorial" title="Making a Vendor for C3">
+<pre>&lt;div id=&quot;cdn_content&quot;&gt;
+&lt;i&gt;In this tutorial you can learn the basics of making a vendor - an agent that produces other agents.&lt;/i&gt;&lt;br&gt;&lt;hr&gt;
+
+A vendor can take many forms, and can produce anything that you like! Using the knowledge from the previous two tutorials it is now straightforward to produce a vendor for making toys or food. 
+
+Have a look at the code below, and download the COS file &lt;a href=&quot;https://web.archive.org/web/20100103132558/http://www.gamewaredevelopment.co.uk/downloads/cdn/food_vendor.cos&quot;&gt;here&lt;/a&gt;.
+
+ &lt;table width=&quot;96%&quot; border=&quot;1&quot; bordercolor=&quot;#000000&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot;&gt;
+                    &lt;tbody&gt;&lt;tr bgcolor=&quot;#525251&quot;&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;&lt;b&gt;Code&lt;/b&gt;&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&lt;b&gt;Explanation&lt;/b&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td height=&quot;26&quot; width=&quot;54%&quot;&gt;**make 
+                        the vendor &lt;/td&gt;
+                      &lt;td height=&quot;26&quot; width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;inst&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;new: 
+                        simp 2 23 10 &quot;fishbowl&quot; 2 0 5000&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Create 
+                        new simple object&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;attr 
+                        199&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Give 
+                        it attributes that allow it to be picked up and activated 
+                        by the hand. Responds to gravity and boundaries.&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;perm 
+                        60&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;A 
+                        permeability that will allow it to sit on wooden platforms 
+                        (rather than fall through them)&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;elas 
+                        0&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Elasticity 
+                        of 0%&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;fric 
+                        100&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Friction 
+                        of 100%&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;accg 
+                        3&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Acceleration 
+                        due to gravity of 3&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;mvto 
+                        5000 3400&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Move 
+                        to the corridor area of the ship&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;cmrt 
+                        0&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Move 
+                        the camera to look at the object&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*****vendor 
+                        activate&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td height=&quot;27&quot; width=&quot;54%&quot;&gt;scrp 
+                        2 23 10 1 &lt;/td&gt;
+                      &lt;td height=&quot;27&quot; width=&quot;46%&quot;&gt;This 
+                        is the activate 1 script for the vendor created above                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*make 
+                        the bowl animate&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;anim 
+                        [0 1 0 1 0 1 0 1 0 1 0]&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Animate 
+                        the bowl&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*get 
+                        the coordinates for the bowl&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;This 
+                        part gets some world coordinates from the bowl - the food 
+                        can then be created at this position later in the script&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;setv 
+                        va00 posl&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Get 
+                        the left position of the bowl&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;addv 
+                        va00 30&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Add 
+                        30 to the left position (makes the coordinate further 
+                        to the right on the screen)&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;setv 
+                        va01 post&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Get 
+                        the top position of the bowl&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;addv 
+                        va01 10&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Add 
+                        10 to the top position (makes the coordinate further down 
+                        screen) &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td height=&quot;28&quot; width=&quot;54%&quot;&gt; 
+                      *produce something here! &lt;/td&gt;
+                      &lt;td height=&quot;28&quot; width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;inst&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;make 
+                        the rest of the script run instantly&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*cheesy-food&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;new: 
+                        simp 2 11 1000 &quot;infinite_cheese_machine&quot; 2 44 4900&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot; rowspan=&quot;6&quot;&gt;Create 
+                        new simple object. This cheese food is the same one created 
+                        in a previous tutorial&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;attr 
+                        195&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;bhvr 
+                        48&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;elas 
+                        30&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;fric 
+                        50&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;accg 
+                        3&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;mvto 
+                        va00 va01&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Move 
+                        it to the position calculated.&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*give 
+                        it some velocity&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;velo 
+                        rand -10 10 rand -15 -20&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Give 
+                        it some velocity - this will make it come flying out of 
+                        the top of the vendor. In this case we're using random 
+                        values for both the X and Y velocities.&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*give 
+                        it a tick&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;tick 
+                        8 &lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Give 
+                        it a small tick (this is purely used to change the image 
+                        plane of the cheese - it starts off at a plane behind 
+                        the vendor and then after a small time moves to a plane 
+                        in front of the vendor)&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;endm                        &lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;End 
+                        of activate 1 script&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*****cheese 
+                        timer&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;scrp 
+                        2 11 1000 9 &lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;The 
+                        timer for the cheese created by the vendor&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;plne 
+                        5001&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Change 
+                        image plane&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;tick 
+                        0 &lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;Stop 
+                        the timer&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;endm&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;End 
+                        of timer script&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;*****eat 
+                        script &lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;scrp 
+                        2 11 1000 12&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot; rowspan=&quot;8&quot;&gt;Eat 
+                        script for the cheese - identical to eat script from previous 
+                        tutorial&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;lock                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;sndc &quot;chwp&quot;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;stim 
+                        writ from 79 1&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;pose 
+                        1&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;wait 
+                        20 &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;kill 
+                        ownr &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;endm&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt; 
+                      &lt;td width=&quot;54%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                      &lt;td width=&quot;46%&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;
+Injecting 
+                    this item into the world will show you a fish bowl type object
+ sitting on the floor. Clicking on it will produce a lump of
+cheese from the top of the device.This can 
+                    be altered to produce anything you desire ... toys, devices,
+eggs, anything! There are many examples of vendor type machines
+                    in C3, including:
+ &lt;ul&gt;
+   &lt;li&gt;Norn, 
+     Grendel and Ettin Egg Layers&lt;/li&gt;
+   &lt;li&gt;Cheese 
+     Machine&lt;/li&gt;
+   &lt;li&gt;Seed 
+     Banks&lt;/li&gt;
+   &lt;li&gt;Creator 
+     and Replicator&lt;/li&gt;
+   &lt;li&gt;... 
+     and many more!&lt;/li&gt;
+                  &lt;/ul&gt;
+The same principle can be used to create temporary items - such as
+                  a spray of mist from the Anti-Infection spray or the Atmosphere
+                  machine in the Norn Terrarium - the thing that is produced
+                    does not have to be an agent that will exist in the world
+                  for long.&lt;br&gt;&lt;br&gt;
+The important 
+                    things to remember when creating a vendor:
+ &lt;ul&gt;
+   &lt;li&gt;You 
+                      need to get coordinates for the created object to appear. 
+                      Normally this is based on the position of the vendor object 
+                      - with modifications to position it and/or take into account 
+     of its size.&lt;/li&gt;
+   &lt;li&gt;You 
+                      should check that the created object can actually be positioned 
+                      where you are trying to put it. For example, if you are 
+                      in an enclosed space when you activate the vendor you may 
+                      find that the coordinates for the created agent now lie 
+                      outside of the room system - and produce an error.&lt;/li&gt;
+&lt;/ul&gt;&lt;br&gt;&lt;hr&gt;&lt;br&gt;
+&lt;b&gt;Topic Keywords:&lt;/b&gt; agent  caos  creatures3  tutorials &lt;br&gt;&lt;br&gt;
 
 &lt;/div&gt;</pre>
 </div>
