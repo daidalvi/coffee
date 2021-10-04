@@ -571,6 +571,8 @@ Error message and password prompt
 
 <li>Using the Map Editor - Part 1</li>
 
+<li>Using the Map Editor - Part 2</li>
+
 <li>views</li>
 
 <li>virtualbox</li>
@@ -12371,7 +12373,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20211004091810686" creator="zeid" list="ROOMPLAN [[Coffee css]] [[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004101948740" modifier="zeid" title="$:/StoryList">
+<div created="20211004091810686" creator="zeid" list="[[Using the Map Editor - Part 2]] [[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004101948740" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -14788,6 +14790,405 @@ in an area you are trying edit, but it can't remove them for you. You will need 
 			If this sounds intimidating, don't worry - this is really only relevant if you plan on removing some of the existing rooms in either C3 or DS.
 &lt;br&gt;&lt;hr&gt;&lt;br&gt;
 &lt;b&gt;Topic Keywords:&lt;/b&gt;  creatures3  dockingstation  tutorials  world &lt;br&gt;&lt;br&gt;
+
+&lt;/div&gt;</pre>
+</div>
+<div created="20211004102949628" creator="zeid" modified="20211004103044461" modifier="zeid" tags="DS DS-tutorial" title="Using the Map Editor - Part 2">
+<pre>&lt;div id=&quot;cdn_content&quot;&gt;
+&lt;i&gt;Metarooms and their place in a CAOS world: what you need to add to a room to make it usable.&lt;/i&gt;&lt;br&gt;&lt;hr&gt;
+
+&lt;a href=&quot;https://web.archive.org/web/20100103222500/http://www.gamewaredevelopment.co.uk/cdn/cdn_more.php?CDN_article_id=34&quot;&gt;Part 1 of the Map Editor tutorial&lt;/a&gt; [[Using the Map Editor - Part 1]] covered how to convert your own image into a metaroom, define
+	floors and walls, and mark rooms as being of a certain type.
+	That tutorial finished with the room being injected into your world and those of you that were 
+	paying attention would have probably wondered how the heck the creatures were supposed to actually 
+	get to that room now!
+	&lt;p&gt;	
+	This tutorial will attempt to highlight the other things you need to do to have a fully 
+	functional area of ship; an area in which creatures can enter and leave, and how to make a 'signpost' 
+	for it so that it appears as an option alongside the other metaroom icons in game.
+	&lt;/p&gt;&lt;p&gt;
+	An understanding of CAOS is expected, so if you don't know what NEW: SIMP does (at least!) then you will 
+	need to follow a CAOS tutorial first - try this one:
+	&lt;a hrefhttp:=&quot;&quot; www.gamewaredevelopment.co.uk=&quot;&quot; cdn=&quot;&quot; cdn_more.php?cdn_article_id=&quot;38&amp;quot;&quot;&gt;Balloon Maker for DS&lt;/a&gt;
+&lt;/p&gt;&lt;h3&gt;
+		Getting Started
+	&lt;/h3&gt;
+The most important thing you need to do first is to identify what exactly your new metaroom is for; is it a 
+	location that creatures can live in - or is it purely for the user? Rooms that are created to house machinery
+	for the player to use don't necessarily need food sources or doors whereas a room designed to house creatures 
+	will obviously need food sources and things for them to play with.
+	
+	&lt;h3&gt;
+Signposts and Favourite Places
+	&lt;/h3&gt;
+	
+	As you explore around the ship you collect icons at the top of the screen that allow you, the player, to move 
+	quickly from metaroom to metaroom; these are known as &lt;i&gt;favourite places&lt;/i&gt;.
+	The Favourite Places mechanism is relatively straightforward, and the workings can be summarised like this: 
+	&lt;br&gt;
+		&lt;ul&gt;
+			&lt;li&gt;There are two aspects to the mechanism; an invisible signpost positioned in your new metaroom,
+			and the favourite places icon at the top of the screen.
+			&lt;/li&gt;&lt;li&gt;If the signpost is on screen (i.e. because that part of your metaroom is on screen) then it checks 
+			to see if your favourite place icon has been launched. If it hasn't been launched then the signpost will 
+			create it for you, highlight it and turn the other favourite place icons off. If the icon is on screen
+			then it will turn off the other ones and highlight the one for this room.
+			&lt;/li&gt;&lt;li&gt;If you click on the icon the view will be moved to point at your signpost.			
+		&lt;/li&gt;&lt;/ul&gt;
+	And that is it! You don't even need to make CAOS scripts to get this working, you just need to reserve a
+	classifier for your signpost and favourite place icon (both should use the same species number) and create the 
+	signpost in your room. An article explaining this process can be found here:
+	&lt;a href=&quot;https://web.archive.org/web/20100103222500/http://www.gamewaredevelopment.co.uk/cdn/CDN_more.php?CDN_article_id=21&amp;quot;&quot;&gt;Favourite Places in DS&lt;/a&gt;
+	
+&lt;h3&gt;
+Doors
+&lt;/h3&gt;
+	
+	Doors are used to allow creatures to move around the ship and usually operate in pairs; one door to get into
+	the metaroom and one door to get out. The basic workings of a door are fairly simple, but there are some things 
+	you need to watch out for. Although throughout this section we will be referring to 'doors' the actual look and 
+	feel of the agent can be anything you desire - it might be a teleporter to get in and out of your room, it might 
+	be a glimmering forcefield, or it could even be a spatula of power that transports creatures when picked up.
+	
+&lt;h4&gt;
+			Basic Code
+&lt;/h4&gt;
+		
+		Here is the basic code that will:
+		&lt;ul&gt;
+			&lt;li&gt; Create a door object inside your metaroom
+			&lt;/li&gt;&lt;li&gt; Create a companion door somewhere else in the ship
+			&lt;/li&gt;&lt;li&gt; LINK the two doors together, which allows smells (and other CA elements) to pass through
+			&lt;/li&gt;&lt;li&gt; Clicking either door with the hand will transport nearby creatures to the other door, and change 
+			the display to point at your new metaroom
+			&lt;/li&gt;&lt;li&gt; A Creature clicking the door will transport themself to the other door
+		&lt;/li&gt;&lt;/ul&gt;
+		
+		&lt;h5&gt;
+Create two doors
+		&lt;/h5&gt;
+		Here is the CAOS Code, you will need to customise this to make it work:&lt;p&gt;
+&lt;/p&gt;&lt;hr&gt;		
+******Create one door
+&lt;br&gt;*** You will need to choose your own classifier and sprite file.
+&lt;br&gt;new: simp 2 2 998 &quot;ds door&quot; 13 65 0
+&lt;br&gt;attr 4
+&lt;br&gt;bhvr 1
+&lt;br&gt;*** You will need to choose a decent location for your doors
+&lt;br&gt;mvto 1690 9056
+&lt;br&gt;* Save the Room number
+&lt;br&gt;setv va50 room targ
+&lt;br&gt;
+&lt;br&gt;******Create the other door
+&lt;br&gt;*** Again, you will need to choose your own classifer and sprite file
+&lt;br&gt;new: simp 2 2 999 &quot;ds door&quot; 13 0 0
+&lt;br&gt;attr 4
+&lt;br&gt;bhvr 1
+&lt;br&gt;*** Again, you will need to choose a decent location
+&lt;br&gt;mvto 2182 8976
+&lt;br&gt;** Save the Room number
+&lt;br&gt;setv va53 room targ
+&lt;br&gt;* CA link the rooms together
+&lt;br&gt;link va50 va53 100
+&lt;hr&gt;		
+	
+&lt;h5&gt;
+Give them scripts
+&lt;/h5&gt;
+	These doors only need one or two scripts, this example uses two scripts; one when clicked on or activated by a
+	creature, and the other that deals with animation of the partner door. Again, you will need to customise these 
+	scripts to get things working in your world.&lt;br&gt;
+	Both doors will have nearly a identical set of scripts-  only in a few key places do they need changing. For the 
+	sake of brevity only one set of scripts is shown here.
+	&lt;p&gt;
+
+We will be using one OV variable as a permanent variable - OV00 - as follows:&lt;br&gt;
+***OV00 is state of door&lt;br&gt;
+*0=closed, 1=open&lt;br&gt;
+&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;hr&gt;	
+*** The main script - Door has been pushed. 
+&lt;br&gt;*** You will need one of these scripts for each of your doors.
+&lt;br&gt;*** REMEMBER to update script classifier with your real door classifier.
+&lt;br&gt;scrp 2 2 998 1
+&lt;br&gt;	lock
+&lt;br&gt;	inst
+&lt;br&gt;** stim with &quot;wait&quot;
+&lt;br&gt;	stim writ from 75 1
+&lt;br&gt;**	we'll be using VA99 to indicate whether a metaroom visual change is required, or just a creature transfer	
+&lt;br&gt;*	clear 'change metaroom' signal	
+&lt;br&gt;	setv va99 0
+&lt;br&gt;*	check who gave signal
+&lt;br&gt;	targ from
+&lt;br&gt;*	check if its the pointer
+&lt;br&gt;	doif targ eq pntr
+&lt;br&gt;*		flag metaroom change
+&lt;br&gt;		setv va99 1
+&lt;br&gt;	endi
+
+
+&lt;br&gt;*	check your neighbour door
+&lt;br&gt;*** THIS PART WILL NEED CHANGING FOR EACH DOOR, make sure you use the correct CDN_Classifiers
+&lt;br&gt;	rtar 2 2 999
+&lt;br&gt;doif targ ne null
+&lt;br&gt;		doif ov00 eq 1
+&lt;br&gt;			stop
+&lt;br&gt;		else
+&lt;br&gt;*** WE NEED THESE 3 VALUES TO KNOW WHERE TO MOVE THE CREATURE/VIEW TO
+&lt;br&gt;*			store X Y location
+&lt;br&gt;			setv va00 posx
+&lt;br&gt;			setv va01 posy
+&lt;br&gt;*			store metaroom number
+&lt;br&gt;			setv va02 gmap va00 va01		
+&lt;br&gt;*** THIS NEXT LINE TRIGGERS AN EVENT IN PARTNER DOOR. This is usually used to animate the recieving door.
+&lt;br&gt;*		otherwise animate		
+&lt;br&gt;			mesg writ targ 1
+&lt;br&gt;		endi
+&lt;br&gt;	endi
+&lt;br&gt;	targ ownr
+&lt;br&gt;*	flag you are open
+&lt;br&gt;	setv ov00 1
+&lt;br&gt;* DO YOUR OPENING ANIMATION HERE
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;***************************
+&lt;br&gt;** Only transfers all touching creatures if the pointer activated the door,
+&lt;br&gt;** if it wasn't the pointer then it only transfers the creature that touched it.
+&lt;br&gt;	inst
+&lt;br&gt;	doif from = pntr
+&lt;br&gt;		etch 4 0 0
+&lt;br&gt;*			move creatures because hand clicked door
+&lt;br&gt;***	IMPORTANT SAFETY CHECKS HERE! We are making sure that the creatures we are moving aren't 
+&lt;br&gt;*** being held by the hand, being carried, asleep or dead		
+&lt;br&gt;			doif targ ne hhld and carr = null and aslp = 0 and dead = 0
+&lt;br&gt;				mvft va00 va01
+&lt;br&gt;				stim writ targ 95 1
+&lt;br&gt;			endi
+&lt;br&gt;		next
+&lt;br&gt;	else
+&lt;br&gt;*		or only move the creature that pressed the door
+&lt;br&gt;		doif touc ownr from = 1
+&lt;br&gt;			inst
+&lt;br&gt;			doif from ne null
+&lt;br&gt;				targ from
+&lt;br&gt;				mvft va00 va01
+&lt;br&gt;				stim writ targ 95 1
+&lt;br&gt;				setv va99 0
+&lt;br&gt;			endi
+&lt;br&gt;		endi
+&lt;br&gt;	endi
+&lt;br&gt;	targ ownr
+&lt;br&gt;*	if meta change wanted
+&lt;br&gt;	doif va99 eq 1
+&lt;br&gt;		inst
+&lt;br&gt;		subv va00 100
+&lt;br&gt;		subv va01 250
+&lt;br&gt;		doif hhld eq null
+&lt;br&gt;			meta va02 va00 va01 0
+&lt;br&gt;			slow
+&lt;br&gt;		endi
+&lt;br&gt;	endi
+&lt;br&gt;	targ ownr
+&lt;br&gt;*	SORT OUT YOUR CLOSING ANIMATION HERE
+&lt;br&gt;
+&lt;br&gt;*	reset your movement flag
+&lt;br&gt;	setv ov00 0
+&lt;br&gt;endm
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;***open and close event from partnering door.
+&lt;br&gt;***You will need one of these scripts for each door.
+&lt;br&gt;scrp 2 2 999 2
+&lt;br&gt;	lock
+&lt;br&gt;* mark as open
+&lt;br&gt;	setv ov00 1
+&lt;br&gt;* ANIMATE OPEN AND CLOSE HERE
+&lt;br&gt;*	mark as closed
+&lt;br&gt;	setv ov00 0
+&lt;br&gt;endm
+&lt;hr&gt;
+&lt;p&gt;
+The above scripts are cut-down versions of the code used to create the doors in Docking Station, only the code for
+locking out a particular species is missing. If you want to look at the complete code then you should open up the 
+&quot;doors.cos&quot; file in your Docking Station bootstrap folder.
+
+&lt;/p&gt;&lt;h3&gt;
+What else?
+&lt;/h3&gt;
+
+Now we have a metaroom that has a way for the user to access it anytime they desire, using the favourite places
+mechanism, and also a way for both user and creature to enter the room, using the door mechanism. What else do you
+need to bring your world to life?&lt;br&gt;
+If your room is designed for creatures to live in then you will need to provide some facilities for them. The minimum 
+you will need is some food and some toys. If you want the room to have its own food chain then you might like to 
+make some plants and animals. If you are into making quite advanced agents and food chains you will also want to 
+use the Cellular Automata (CA) system in the engine, as this is an advanced topic it will be covered in a different 
+tutorial.
+&lt;p&gt;
+REMEMBER: &lt;br&gt;
+If you don't know anything about CAOS then you need to start somewhere, a good starting place is this tutorial on
+&lt;a href=&quot;https://web.archive.org/web/20100103222500/http://www.gamewaredevelopment.co.uk/cdn/CDN_more.php?CDN_article_id=38&quot;&gt;making a Balloon Maker object&lt;/a&gt;
+
+&lt;/p&gt;&lt;h2&gt;
+	Food
+&lt;/h2&gt;
+All creatures need good sources of food to survive, here's a tutorial on making a simple fat/protein rich food - change the 
+STIM to make other types. Add your own images to make your own food.&lt;br&gt;
+&lt;a href=&quot;https://web.archive.org/web/20100103222500/http://www.gamewaredevelopment.co.uk/cdn/CDN_more.php?CDN_article_id=79&quot;&gt;Making food for C3&lt;/a&gt;
+&lt;h2&gt;
+Food vendor
+&lt;/h2&gt;
+Rather than having food lying around the place making it look untidy you might want to dispense food from a vending machine, 
+and a tutorial to show you how to do this can be found here: &lt;br&gt;
+&lt;a href=&quot;https://web.archive.org/web/20100103222500/http://www.gamewaredevelopment.co.uk/cdn/CDN_more.php?CDN_article_id=80&quot;&gt;Making a vendor for C3&lt;/a&gt;
+
+&lt;h2&gt;
+	Toys
+&lt;/h2&gt;
+Creatures get bored and need distractions like the rest of us, make them something to keep them occupied! Here's a tutorial 
+on making a simple toy object.&lt;br&gt;
+&lt;a href=&quot;https://web.archive.org/web/20100103222500/http://www.gamewaredevelopment.co.uk/cdn/CDN_more.php?CDN_article_id=81&quot;&gt;Making a toy for C3&lt;/a&gt;
+
+
+&lt;h3&gt;
+	Elevators
+&lt;/h3&gt;
+Elevators and lifts can be viewed as some of the hardest agents to make properly, but the basic workings of a lift are 
+pretty straightforward.&lt;br&gt;
+The elevators in Docking Station can be described, at a high level, as working like this:
+	&lt;ul&gt;
+		&lt;li&gt;Each lift consists of a carriage with an up and a down button, and a number of call buttons - one on each level 
+		the lift can travel to.
+		&lt;/li&gt;&lt;li&gt;If the lift is moving then presses on the carriage buttons are igored.
+		&lt;/li&gt;&lt;li&gt;When the up button in the carriage is pressed the lift will move up, to the level above its current level (if one exists).
+		&lt;/li&gt;&lt;li&gt;When the down button in the carriage is pressed the lift will move down, to the level below its current level (if one exists).
+		&lt;/li&gt;&lt;li&gt;Pressing one of the call buttons will summon the carriage to that level, if the lift is already moving then this request 
+		is stacked until the lift is stationary
+	&lt;/li&gt;&lt;/ul&gt;
+
+The DS lifts were written to be general purpose, that is to say that the code for one of the elevators in DS is the same as all 
+other elevators - there is no inherent 'awareness of location' in the code itself. This means you can re-use the code for the lifts 
+and simply create your own install script so that some are created in the location you desire.&lt;br&gt;
+In this section the install code for the lifts will be explained, so you can make the changes you need. Open up the file called
+&quot;nav lift.cos&quot; which is in your Docking Station bootstrap folder.&lt;p&gt;
+
+This code is for the creation of the lift in the Norn Meso area. It creates the carriage part and 3 call buttons. When creating your
+own lift code you need to have the answers to these questions; How many call buttons will there be and at what level does the
+lift start&lt;br&gt;
+
+&lt;/p&gt;&lt;hr&gt;
+&lt;br&gt;
+&lt;br&gt;*base part
+&lt;br&gt;new: vhcl 3 1 3 &quot;ds lifts&quot; 1 0 10
+&lt;br&gt;*	open air cabin (+512)
+&lt;br&gt;attr 512
+&lt;br&gt;*	creatures can act1 and act2 this object
+&lt;br&gt;bhvr 3
+&lt;br&gt;*	define the cabin
+&lt;br&gt;cabn 55 80 190 210
+&lt;br&gt;cabp 50
+&lt;br&gt;cabw 100
+&lt;br&gt;*the animating internal part
+&lt;br&gt;pat: dull 1 &quot;ds lifts&quot; 1 63 104 1
+&lt;br&gt;*the doors
+&lt;br&gt;pat: dull 2 &quot;ds lifts&quot; 3 44 89 200
+&lt;br&gt;part 2
+&lt;br&gt;frat 3
+&lt;br&gt;*anim [0 1 2 3 3 3 2 1 0 255]
+&lt;br&gt;*the left foot
+&lt;br&gt;pat: dull 3 &quot;ds lifts&quot; 7 -1 161 1
+&lt;br&gt;*the right foot
+&lt;br&gt;pat: dull 4 &quot;ds lifts&quot; 12 184 161 1
+&lt;br&gt;*the navigator!
+&lt;br&gt;pat: dull 5 &quot;ds lifts&quot; 17 75 -1 0
+&lt;br&gt;*bottom left flame
+&lt;br&gt;pat: dull 6 &quot;ds lifts&quot; 26 -10 190 0
+&lt;br&gt;*bottom right flame
+&lt;br&gt;pat: dull 7 &quot;ds lifts&quot; 28 203 190 0
+&lt;br&gt;*top left flame
+&lt;br&gt;pat: dull 8 &quot;ds lifts&quot; 30 22 45 1
+&lt;br&gt;*top right flame
+&lt;br&gt;pat: dull 9 &quot;ds lifts&quot; 32 184 45 1
+&lt;br&gt;*the go down button - send activate 2
+&lt;br&gt;pat: butt 10 &quot;ds lifts&quot; 22 2 115 186 1 [] 1 0
+&lt;br&gt;*the go up button - sends activate 1
+&lt;br&gt;pat: butt 11 &quot;ds lifts&quot; 24 2 115 157 1 [] 0 0
+&lt;br&gt;*position it in the Norn area
+&lt;br&gt;mvto 1165 9035
+&lt;br&gt;*give it ID of which level it is at
+&lt;br&gt;** THIS PART IS IMPORTANT. YOU WILL SEE IN A MOMENT THAT EACH CALL BUTTON IS GIVEN A NUMBER. THESE NUMBERS ARE USED TO LABEL 
+&lt;br&gt;** EACH LEVEL THE LIFT STOPS AT. EACH LIFT ALSO KEEPS TRACK OF THIS NUMBER SO IT KNOWS WHAT LEVEL IT IS AT.
+&lt;br&gt;** THE LOWEST LEVEL IS 0, THE NEXT LEVEL UP IS 1, THE NEXT LEVEL UP IS 2 ETC. WE WILL BE CREATING 
+&lt;br&gt;** 3 CALL BUTTONS, AND THE LIFT STARTS ON THE MIDDLE LEVEL. THIS MEANS IT IS GIVEN AN OV01 VALUE OF 1.
+&lt;br&gt;setv ov01 1
+&lt;br&gt;*store it's TARG ID in temp variable
+&lt;br&gt;*** WHEN WE CREATE THE CALL BUTTONS IN A MOMENT WE WANT THEM TO KNOW WHICH LIFT THEY 'BELONG TO'. CREATING AN AGENT VARIABLE TO 
+&lt;br&gt;*** RECORD THE ID OF THE LIFT ALLOWS US TO STORE IT IN THE CALL BUTTONS LATER.
+&lt;br&gt;seta va00 targ
+&lt;br&gt;*set variable for type agents
+&lt;br&gt;*** THE CODE FOR THE LIFTS REQUIRES THEM TO GRAB A PARTICULAR CREATURE SOMETIMES, WE ARE JUST SETTING UP THIS VARIABLE TO BE 
+&lt;br&gt;*** ABLE TO STORE 'AGENT' TYPE RATHER THAN AN INTEGER OR STRING.
+&lt;br&gt;seta ov02 null
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;*** WE CAN NOW CREATE EACH INDIVIDUAL CALL BUTTON, STARTING WITH THE BUTTON AT THE LOWEST LEVEL AND WORKING OUR WAY UP.
+&lt;br&gt;*********CALL BUTTON
+&lt;br&gt;*each button needs an ID - OV00
+&lt;br&gt;***top level of norn area
+&lt;br&gt;new: simp 2 12 21 &quot;ds lifts&quot; 2 34 310
+&lt;br&gt;attr 4
+&lt;br&gt;*creatures can act1 this object
+&lt;br&gt;bhvr 1
+&lt;br&gt;*** AS MENTIONED EARLIER, EACH LIFT NEEDS AN ID TO TELL IT WHICH LEVEL IT IS AT. THIS IS THE BOTTOM MOST BUTTON SO HAS A VALUE OF 0
+&lt;br&gt;setv ov00 0
+&lt;br&gt;*store ID of corresponding lift in OV16
+&lt;br&gt;*** NOW WE CAN STORE THE AGENT POINTER TO THE LIFT INSIDE AN OV VARIABLE OF THE CALL BUTTON, USED IN THE SCRIPT TO TELL 
+&lt;br&gt;*** THE CORRECT LIFT TO MOVE
+&lt;br&gt;seta ov16 va00
+&lt;br&gt;mvto 1156 8954
+&lt;br&gt;
+&lt;br&gt;*** NOW WE CREATE THE SECOND LIFT
+&lt;br&gt;***mid level of norn area
+&lt;br&gt;new: simp 2 12 21 &quot;ds lifts&quot; 2 34 310
+&lt;br&gt;attr 4
+&lt;br&gt;*creatures can act1 this object
+&lt;br&gt;bhvr 1
+&lt;br&gt;*** NOTICE THE DIFFERENT LEVEL NUMBER STORED IN OV01
+&lt;br&gt;setv ov00 1
+&lt;br&gt;*store ID of corresponding lift in OV16
+&lt;br&gt;*** AND THE POINTER TO THE 'PARENT' LIFT IS STORED IN THIS BUTTON TOO
+&lt;br&gt;seta ov16 va00
+&lt;br&gt;mvto 1432 9185
+&lt;br&gt;
+&lt;br&gt;** AND NOW WE CREATE THE LAST LIFT
+&lt;br&gt;***bottom level of norn area
+&lt;br&gt;new: simp 2 12 21 &quot;ds lifts&quot; 2 34 310
+&lt;br&gt;attr 4
+&lt;br&gt;*creatures can act1 this object
+&lt;br&gt;bhvr 1
+&lt;br&gt;*** DIFFERENT LEVEL NUMBER AGAIN
+&lt;br&gt;setv ov00 2
+&lt;br&gt;*store ID of corresponding lift in OV16
+&lt;br&gt;*** AND STORE THE ID OF THE PARENT LIFT
+&lt;br&gt;seta ov16 va00
+&lt;br&gt;mvto 1424 9595
+&lt;hr&gt;
+&lt;p&gt;
+
+And that is it! When creating your own lifts just make sure you create your lift call buttons with increasing level numbers, and 
+remember to position the lift and the buttons in your own location. If you use the DS lift graphics and make these changes there 
+is no need for you to alter the CDN_Classifiers used, or write your own scripts. Your newly positioned lifts should function just 
+like the existing ones.&lt;/p&gt;&lt;p&gt;
+For a greater challenge, why not take the basics of the code and create your own lift images? With a small amount of reworking you 
+can easily make your own elevator code.&lt;/p&gt;&lt;p&gt;
+
+
+IMPORTANT&lt;br&gt;
+All images and code included with Creatures 3 and Docking Station are copyright Creature Labs Ltd. You have permission to use 
+them within your own Docking Station and Creatures 3 development projects unless you are making them for commercial gain. All commercial 
+uses of our code and images are prohibited without a license.&lt;br&gt;&lt;/p&gt;&lt;hr&gt;&lt;br&gt;
+&lt;b&gt;Topic Keywords:&lt;/b&gt;  agent  caos  creatures3  dockingstation  tutorials  world &lt;br&gt;&lt;br&gt;
 
 &lt;/div&gt;</pre>
 </div>
