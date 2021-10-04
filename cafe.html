@@ -485,6 +485,8 @@ Error message and password prompt
 
 <li>bash</li>
 
+<li>Basic lift script</li>
+
 <li>C3/DS CAOS Codes</li>
 
 <li>Chandra - assembly</li>
@@ -12382,7 +12384,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20211004091810686" creator="zeid" list="[[C3/DS CAOS Codes]] [[Making a Vendor for C3]] [[Using the Map Editor - Part 2]] [[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004101948740" modifier="zeid" title="$:/StoryList">
+<div created="20211004091810686" creator="zeid" list="[[Basic lift script]] [[C3/DS CAOS Codes]] [[Making a Vendor for C3]] [[Using the Map Editor - Part 2]] [[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004101948740" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -13951,6 +13953,262 @@ enum class Functions {
 
 &lt;&lt;toc-selective-expandable 'bash'&gt;&gt;
 
+&lt;/div&gt;</pre>
+</div>
+<div created="20211004104221290" creator="zeid" modified="20211004104329853" modifier="zeid" tags="DS DS-tutorial" title="Basic lift script">
+<pre>&lt;div class=&quot;mw-parser-output&quot;&gt;
+
+&lt;p&gt;This is a very basic &lt;a href=&quot;/Lift&quot; title=&quot;Lift&quot;&gt;lift&lt;/a&gt; with 2 levels and 2 call &lt;a href=&quot;/Button&quot; title=&quot;Button&quot;&gt;buttons&lt;/a&gt;.
+&lt;/p&gt;
+&lt;h3&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Script_contents&quot;&gt;Script contents&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=2&quot; title=&quot;Edit section: Script contents&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;Install the lift.&lt;/li&gt;
+&lt;li&gt;Install the &lt;a href=&quot;/Call_button&quot; class=&quot;mw-redirect&quot; title=&quot;Call button&quot;&gt;call buttons&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Add buttons on the lift itself, up and down.&lt;/li&gt;
+&lt;li&gt;When up is pressed, &lt;a href=&quot;/Enum&quot; class=&quot;mw-redirect&quot; title=&quot;Enum&quot;&gt;enum&lt;/a&gt; the lift, and tell it to go up.  Meanwhile, the button changes to look like it's 'on'.  Vice versa for down.&lt;/li&gt;
+&lt;li&gt;When call button 1 (1st floor) or 2 (ground floor) is pressed, enum the lift, use an &lt;a href=&quot;/Variable&quot; title=&quot;Variable&quot;&gt;ov&lt;/a&gt; and set it to up/down (doif ov01 0/1).  Make sure not to call the script when the lift is moving.&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;It can be changed by removing the part with ov01 = 2 in the script.
+&lt;/p&gt;
+&lt;h3&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Image_file_content&quot;&gt;Image file content&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=3&quot; title=&quot;Edit section: Image file content&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;0 - the lift&lt;/li&gt;
+&lt;li&gt;1 - lift call button off&lt;/li&gt;
+&lt;li&gt;2 - lift call button on&lt;/li&gt;
+&lt;li&gt;3 - button on lift down/off&lt;/li&gt;
+&lt;li&gt;4 - button on lift down/on&lt;/li&gt;
+&lt;li&gt;5 - button on lift up/off&lt;/li&gt;
+&lt;li&gt;6 - button on lift up/on&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Install_Script&quot;&gt;Install Script&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=4&quot; title=&quot;Edit section: Install Script&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;Make sure you &lt;a class=&quot;external text&quot; href=&quot;http://creaturescaves.com/dev.php?section=Reservations&quot;&gt;reserve&lt;/a&gt; your &lt;a href=&quot;/Class_number&quot; title=&quot;Class number&quot;&gt;class numbers&lt;/a&gt; at &lt;a href=&quot;/Creatures_Caves&quot; title=&quot;Creatures Caves&quot;&gt;Creatures Caves&lt;/a&gt;.&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;&lt;a href=&quot;/INST&quot; title=&quot;INST&quot;&gt;inst&lt;/a&gt;
+&lt;a href=&quot;/NEW:_VHCL?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;NEW: VHCL (page does not exist)&quot;&gt;new: vhcl&lt;/a&gt; 3 1 11111 &quot;tutolift&quot; 7 0 10
+&lt;a href=&quot;/ATTR&quot; title=&quot;ATTR&quot;&gt;attr&lt;/a&gt; 512
+&lt;a href=&quot;/BHVR&quot; title=&quot;BHVR&quot;&gt;bhvr&lt;/a&gt; 3
+&lt;a href=&quot;/CABN&quot; title=&quot;CABN&quot;&gt;cabn&lt;/a&gt; 0 0 100 130
+&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;
+&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Cabin left top right down - related to the sprite boundaries - it says where the parts of the lift are.&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;&lt;a href=&quot;/CABP?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;CABP (page does not exist)&quot;&gt;cabp&lt;/a&gt; 50
+&lt;a href=&quot;/PERM&quot; title=&quot;PERM&quot;&gt;perm&lt;/a&gt; 30
+&lt;a href=&quot;/CABW?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;CABW (page does not exist)&quot;&gt;cabw&lt;/a&gt; 100
+&lt;a href=&quot;/ELAS&quot; title=&quot;ELAS&quot;&gt;elas&lt;/a&gt; 0
+&lt;a href=&quot;/CLAC&quot; title=&quot;CLAC&quot;&gt;clac&lt;/a&gt; 0
+&lt;a href=&quot;/FRIC&quot; title=&quot;FRIC&quot;&gt;fric&lt;/a&gt; 100
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;The go down button - sends activate 2 (&lt;a href=&quot;/Pull&quot; title=&quot;Pull&quot;&gt;pull&lt;/a&gt; for norns).&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;&lt;a href=&quot;/PAT:_BUTT&quot; title=&quot;PAT: BUTT&quot;&gt;pat: butt&lt;/a&gt; 1 &quot;tutolift&quot; 3 7 10 20 1 [] 3002 0
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;3 = Image for the button (see &lt;a href=&quot;/Basic_lift_script#Summary&quot; title=&quot;Basic lift script&quot;&gt;Summary&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;7 = Total number of images in &lt;a href=&quot;/Sprite&quot; title=&quot;Sprite&quot;&gt;sprite&lt;/a&gt; file&lt;/li&gt;
+&lt;li&gt;10 = &lt;a href=&quot;/RELX?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;RELX (page does not exist)&quot;&gt;relx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;20 = &lt;a href=&quot;/RELY?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;RELY (page does not exist)&quot;&gt;rely&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;1 = relplane&lt;/li&gt;
+&lt;li&gt;[] = The &lt;a href=&quot;/ANIM&quot; title=&quot;ANIM&quot;&gt;animation&lt;/a&gt; for your button when you roll your mouse over it&lt;/li&gt;
+&lt;li&gt;3002 = The script execution query sent when pressed&lt;/li&gt;
+&lt;li&gt;0 = The call message will be sent if you've clicked on any of the pixels of the button.&lt;/li&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;li&gt;The go up button - sends activate 1 (&lt;a href=&quot;/Push&quot; title=&quot;Push&quot;&gt;push&lt;/a&gt; for norns).&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;pat: butt 2 &quot;tutolift&quot; 5 7 35 20 1 [] 3001 0
+&lt;a href=&quot;/MVTO&quot; title=&quot;MVTO&quot;&gt;mvto&lt;/a&gt; 41787 49190
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;Here the lift is already on the 1st floor - we set this in ov01.&lt;/li&gt;&lt;/ul&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;0 = ground&lt;/li&gt;
+&lt;li&gt;1 = floor 1&lt;/li&gt;
+&lt;li&gt;2 = in movement&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;setv ov01 1
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;Now we create the lift call buttons.&lt;/li&gt;&lt;/ul&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;The lift caller for the first floor:&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;&lt;a href=&quot;/New:_simp&quot; class=&quot;mw-redirect&quot; title=&quot;New: simp&quot;&gt;new: simp&lt;/a&gt; 2 12 11111 &quot;tutolift&quot; 7 1 10
+attr 196
+bhvr 1
+perm 70
+&lt;a href=&quot;/ACCG&quot; title=&quot;ACCG&quot;&gt;accg&lt;/a&gt; 2
+elas 0
+mvto 41760 49150
+&lt;a href=&quot;/SETV&quot; title=&quot;SETV&quot;&gt;setv&lt;/a&gt; ov00 1
+&lt;/pre&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;The one for the ground floor:&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;new: simp 2 12 11110 &quot;tutolift&quot; 7 1 10
+attr 196
+bhvr 1
+perm 70
+accg 2
+elas 0
+mvto 41760 49400
+setv ov00 0
+&lt;a href=&quot;/ENDM&quot; title=&quot;ENDM&quot;&gt;endm&lt;/a&gt;
+&lt;/pre&gt;
+&lt;h3&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Action_Scripts&quot;&gt;Action Scripts&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=5&quot; title=&quot;Edit section: Action Scripts&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;Scripts of the lift call buttons.&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;scrp 2 12 11111 1
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;We enum the lift and ask it with a button to execute the script (only if it is not already at the wanted level).&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;&lt;a href=&quot;/ENUM&quot; title=&quot;ENUM&quot;&gt;enum&lt;/a&gt; 3 1 11111
+&lt;a href=&quot;/DOIF&quot; title=&quot;DOIF&quot;&gt;doif&lt;/a&gt; ov01 &lt;a href=&quot;/NE&quot; class=&quot;mw-redirect&quot; title=&quot;NE&quot;&gt;ne&lt;/a&gt; 1 and ov01 ne 2
+&lt;a href=&quot;/MESG_WRIT&quot; title=&quot;MESG WRIT&quot;&gt;mesg writ&lt;/a&gt; &lt;a href=&quot;/TARG&quot; title=&quot;TARG&quot;&gt;targ&lt;/a&gt; 3011
+&lt;a href=&quot;/SETA&quot; title=&quot;SETA&quot;&gt;seta&lt;/a&gt; va00 targ
+targ &lt;a href=&quot;/OWNR&quot; title=&quot;OWNR&quot;&gt;ownr&lt;/a&gt;
+&lt;a href=&quot;/POSE&quot; title=&quot;POSE&quot;&gt;pose&lt;/a&gt; 1
+targ va00
+&lt;a href=&quot;/LOOP&quot; title=&quot;LOOP&quot;&gt;loop&lt;/a&gt;
+&lt;a href=&quot;/UNTL&quot; title=&quot;UNTL&quot;&gt;untl&lt;/a&gt; ov01 = 1
+targ ownr
+pose 0
+&lt;a href=&quot;/ENDI&quot; title=&quot;ENDI&quot;&gt;endi&lt;/a&gt;
+&lt;a href=&quot;/NEXT&quot; title=&quot;NEXT&quot;&gt;next&lt;/a&gt;
+targ ownr
+endm
+&lt;/pre&gt;
+&lt;pre&gt;scrp 2 12 11110 1
+enum 3 1 11111
+doif ov01 ne 0 and ov01 ne 2
+mesg writ targ 3012
+seta va00 targ
+targ ownr
+pose 1
+targ va00
+loop
+untl ov01 = 0
+targ ownr
+pose 0
+endi
+next
+targ ownr
+endm
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;Here are the scripts that enable the buttons on the lift to call it up and down.&lt;/li&gt;&lt;/ul&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;Down:&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;scrp 3 1 11111 3002
+enum 3 1 11111
+&lt;/pre&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;3012 is a random number that you chose to refer to a script number - you can set it fairly high, but not too much, and be careful not to choose in-use script numbers. Please reserve script numbers at &lt;a href=&quot;/Creatures_Caves&quot; title=&quot;Creatures Caves&quot;&gt;Creatures Caves&lt;/a&gt;.  Once you've chosen the number, keep it for the action you want to be done.&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;mesg writ targ 3012
+next
+targ ownr
+stop
+endm
+&lt;/pre&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;Up:&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;scrp 3 1 11111 3001
+enum 3 1 11111
+mesg writ targ 3011
+next
+targ ownr
+stop
+endm
+&lt;/pre&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;3012 is used here - the button sent a message to the script 3012.  This means that when pressed, the button tells the lift to execute the following lines.&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;ul&gt;&lt;li&gt;Go down.&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;scrp 3 1 11111 3012
+doif ov01 ne 0
+setv ov01 2
+part 1
+anim [1]
+part 0
+&lt;a href=&quot;/Lock&quot; class=&quot;mw-redirect&quot; title=&quot;Lock&quot;&gt;lock&lt;/a&gt;
+gpas 4 0 0 1 
+&lt;/pre&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;/Gpas?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;Gpas (page does not exist)&quot;&gt;gpas&lt;/a&gt; gets any nearby &lt;a href=&quot;/Creature&quot; title=&quot;Creature&quot;&gt;creatures&lt;/a&gt; (agents that match the script numbers 4 0 0).&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;loop
+setv vely 3
+untl obst down &amp;lt; 10
+wait 4
+setv vely 0
+setv ov01 0
+inst
+epas 4 0 0
+doif targ &amp;lt;&amp;gt; null
+stim writ targ 94 1
+endi
+next
+targ ownr
+dpas 0 0 0
+&lt;/pre&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;/Dpas?action=edit&amp;amp;redlink=1&quot; class=&quot;new&quot; title=&quot;Dpas (page does not exist)&quot;&gt;dpas&lt;/a&gt; drops everything inside the lift when the transport is done.&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;pre&gt;part 1
+pose 0
+part 0
+unlk
+setv ov01 0
+endi
+stop
+endm
+
+&lt;/pre&gt;
+&lt;ul&gt;&lt;li&gt;Go up.&lt;/li&gt;&lt;/ul&gt;
+&lt;pre&gt;scrp 3 1 11111 3011
+doif ov01 ne 1
+setv ov02 2
+part 2
+pose 1
+part 0
+lock
+gpas 4 0 0 1
+loop
+setv vely -3
+untl posy &amp;lt; 49250
+setv vely 0
+setv ov01 1
+inst
+epas 4 0 0
+doif targ &amp;lt;&amp;gt; null
+stim writ targ 94 1
+endi
+next
+targ ownr
+dpas 0 0 0
+part 2
+pose 0
+part 0
+unlk
+setv ov01 1
+endi
+stop
+endm
+&lt;/pre&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Remove_Script&quot;&gt;Remove Script&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=6&quot; title=&quot;Edit section: Remove Script&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;pre&gt;rscr
+enum 3 1 11111
+kill targ
+next
+enum 2 12 11110
+kill targ
+next
+enum 2 12 11111
+kill targ
+next
+&lt;/pre&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Credits&quot;&gt;Credits&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=7&quot; title=&quot;Edit section: Credits&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;The guy that has been breaking his poor head for 2 days to write this script: &lt;a href=&quot;/Zareb&quot; title=&quot;Zareb&quot;&gt;zareb&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;People that helped him to get this script finished:&lt;/li&gt;&lt;/ul&gt;
+&lt;dl&gt;&lt;dd&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;/Edash&quot; title=&quot;Edash&quot;&gt;Edash&lt;/a&gt; - gave all the information needed to use messages. Without him, no script! *hugs*&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/Liam&quot; title=&quot;Liam&quot;&gt;Liam&lt;/a&gt; - gave comments on the script, and some more information.&lt;/li&gt;&lt;/ul&gt;&lt;/dd&gt;&lt;/dl&gt;
+&lt;ul&gt;&lt;li&gt;&lt;b&gt;Vinsento&lt;/b&gt;&amp;nbsp;: the poor norn that helped &lt;a href=&quot;/Zareb&quot; title=&quot;Zareb&quot;&gt;zareb&lt;/a&gt; to test this lift.  You should be grateful to this norn, that travelled out of room boundaries so many times!&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;External_links&quot;&gt;External links&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/Basic_lift_script?action=edit&amp;amp;section=8&quot; title=&quot;Edit section: External links&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;&lt;a class=&quot;external text&quot; href=&quot;https://web.archive.org/web/20170814231013/http://www.gamewareeurope.com/GWDev/cdn/CDN_more.php?CDN_article_id=46&quot;&gt;Using the Map Editor - Part 2&lt;/a&gt; - discusses another way of coding an elevator.&lt;/li&gt;&lt;/ul&gt;
+&lt;!-- 
+NewPP limit report
+Cached time: 20211004104345
+Cache expiry: 86400
+Dynamic content: false
+CPU time usage: 0.025 seconds
+Real time usage: 0.029 seconds
+Preprocessor visited node count: 40/1000000
+Preprocessor generated node count: 72/1000000
+Post‐expand include size: 384/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 3/40
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+--&gt;
+&lt;!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    3.552      1 Template:Cleanup
+100.00%    3.552      1 -total
+--&gt;
+
+&lt;!-- Saved in parser cache with key creatureswiki:pcache:idhash:4733-0!canonical and timestamp 20211004104345 and revision id 59279
+ --&gt;
 &lt;/div&gt;</pre>
 </div>
 <div created="20211004103601096" creator="zeid" modified="20211004103629621" modifier="zeid" tags="DS DS-tutorial CAOS" title="C3/DS CAOS Codes">
