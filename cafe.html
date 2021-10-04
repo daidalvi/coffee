@@ -389,6 +389,8 @@ Error message and password prompt
 
 <li>$:/state/toc/programming-gdbcommand-628207791</li>
 
+<li>$:/state/toc/zest-разное-1640320810</li>
+
 <li>$:/status/RequireReloadDueToPluginChange</li>
 
 <li>$:/status/UserName</li>
@@ -564,6 +566,8 @@ Error message and password prompt
 <li>Todo LHD-RV</li>
 
 <li>Turnkey Lamp</li>
+
+<li>Using the Map Editor - Part 1</li>
 
 <li>views</li>
 
@@ -12155,8 +12159,8 @@ Error message and password prompt
 <div created="20210602141535668" creator="zeid" modified="20210831181004809" modifier="zeid" title="$:/state/tab2--1311305590">
 <pre>php</pre>
 </div>
-<div created="20210826160606675" creator="zeid" modified="20211004091941477" modifier="zeid" title="$:/state/tab2--2017306950">
-<pre>projects</pre>
+<div created="20210826160606675" creator="zeid" modified="20211004100428460" modifier="zeid" title="$:/state/tab2--2017306950">
+<pre>zest</pre>
 </div>
 <div created="20210826160602899" creator="zeid" modified="20210902121608665" modifier="zeid" title="$:/state/tab2--2135597508">
 <pre>Пак Звезда</pre>
@@ -12356,13 +12360,16 @@ Error message and password prompt
 <div created="20210831180953546" creator="zeid" modified="20210831180953546" modifier="zeid" title="$:/state/toc/programming-gdbcommand-628207791">
 <pre>open</pre>
 </div>
+<div created="20211004100430597" creator="zeid" modified="20211004100430597" modifier="zeid" title="$:/state/toc/zest-разное-1640320810">
+<pre>open</pre>
+</div>
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20211004091810686" creator="zeid" list="[[Zvezda - gitee]] Home" modified="20211004091810686" modifier="zeid" title="$:/StoryList">
+<div created="20211004091810686" creator="zeid" list="[[Using the Map Editor - Part 1]] [[Chandra - assembly]] [[Zvezda - gitee]] Home" modified="20211004100431677" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -14447,6 +14454,230 @@ sudo apt install php-mbstring
 ```
 
 </pre>
+</div>
+<div created="20211004101753203" creator="zeid" modified="20211004101927693" modifier="zeid" tags="DS DS-tutorial" title="Using the Map Editor - Part 1">
+<pre>&lt;div id=&quot;cdn_content&quot;&gt;
+
+
+&lt;i&gt;Covering how to create an addon map document, rooms and boundaries.&lt;/i&gt;&lt;br&gt;&lt;br&gt;
+
+Most maps created will be add-on maps, that is to say a series of rooms within metarooms that will be added to your existing Creatures 3 or Docking Station world. This tutorial specifically covers how to go about this process 
+			but most of the information will be relevant to creating a complete world map.
+
+&lt;h3&gt;Create an image&lt;/h3&gt;
+To start off you will need an image for the metaroom you want to create. You can use any art package you desire to do this - you could scan in a drawing or a photograph or create the whole image by hand. However you go about 
+it this tutorial assumes you have one already.&lt;br&gt;&lt;br&gt;
+The image should be &lt;i&gt;at least&lt;/i&gt; 800x600 in size, in BMP format, and preferably in 24bit.
+
+			&lt;h3&gt;Get the map properties&lt;/h3&gt;
+			When you are creating an add-on map you will want to use the same convention of room types and CA properties as 
+			the existing Creatures 3 and Docking Station schema. The simplest way to do this is to load up one of the map 
+			documents that comes with the editor, these are called &quot;C3_RoomData.2er&quot; and &quot;undocked_station.2er&quot; and are the C3 and 
+			DS map files respectively, and remove the existing metarooms. Because the DS map file has less to remove it is probably 
+			easiest to use this one - load it up, use the 'Select Metaroom' room to click on a metaroom and press the 'Delete' key to 
+			remove it. Once this document is clear of metarooms you can save it - &lt;i&gt;&lt;b&gt;remember to rename it though!&lt;/b&gt;&lt;/i&gt;. This 
+			file can now form the basis for your own map.
+
+			&lt;h3&gt;Create the metaroom&lt;/h3&gt;
+			The metaroom is the distinct area you are creating; it has a background image, a location and contains rooms. &lt;br&gt;
+			&lt;ol&gt;
+			&lt;li&gt;Open up your previously saved map document.
+			&lt;/li&gt;&lt;li&gt;Use the 'Add Metaroom' tool and click on the document.
+			&lt;/li&gt;&lt;li&gt;Browse and select your image file in the dialogue presented.
+			&lt;/li&gt;&lt;li&gt;You do want to create a background file and preview file, so leave the checkboxes checked.
+			&lt;/li&gt;&lt;li&gt;Alter the contrast to whatever values you prefer, this is simply for the preview image and doesn't affect the real image.
+			&lt;/li&gt;&lt;li&gt;Click 'ok' and the editor will create your new metaroom.
+			&lt;/li&gt;&lt;li&gt;You will now have a newly created background file in either your Creatures 3 or Docking Station 'Backgrounds' folder, and 
+			a small bitmap of your original image placed into your Map Editor's 'Preview' folder.
+			&lt;/li&gt;&lt;/ol&gt;
+
+			&lt;h3&gt;Position the metaroom&lt;/h3&gt;
+			When you are creating an add-on map this is one of the most crucial parts and can lead to incompatibilities with other 
+			maps. You need to ensure that your metaroom is position such that it doesn't overlap with existing metarooms in the world, 
+			and also (if you intend to make this metaroom available to others, or add other people's metarooms to your world) doesn't 
+			overlap with existing add-on metarooms!&lt;br&gt;&lt;br&gt;
+			At the moment, there is a 3rd party site here: &lt;a href=&quot;https://web.archive.org/web/20100103095524/http://www.wuk.at/happy/norngarden/roomplan.html&quot;&gt;http://www.wuk.at/happy/norngarden/roomplan.html&lt;/a&gt; that has a very good list of existing metarooms, and their locations, and provides an essential service to map makers. This is not a site controlled by Creature Labs
+and so the content can change without our knowledge, at the time of writing the author is intending to move this information to another site.&lt;br&gt;
+When you have found a clear area of map you can then move your metaroom into this area by using the 'Select Metaroom' tool 
+and click dragging the room into this location. Use the Zoom tool and the coordinates shown at the bottom of the editor for 
+fine positioning.
+
+&lt;h3&gt;Create rooms&lt;/h3&gt;
+Now that you have your metaroom, and positioned it in a safe location, you can start the fun part of filling it with rooms!&lt;br&gt;
+Rooms are essential for a map as they define the boundaries of movement for both Creatures and agents. You don't need to fill 
+a metaroom with rooms - there can be areas of your metaroom that aren't contained within a room.&lt;br&gt;
+A useful tip for where to start when making rooms is to start at a floor level, and create your rooms marking this floor.
+			You can then fill in any other areas you need a room system.&lt;br&gt;
+			&lt;ol&gt;
+			&lt;li&gt;Make your first point on the map on the desired floor level.&lt;br&gt;
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_1.jpg&quot;&gt;
+			&lt;/li&gt;&lt;li&gt;Move the cursor until you have a suitable section of floor defined with a line, and make you next point.&lt;br&gt;
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_2.jpg&quot;&gt;
+			&lt;/li&gt;&lt;li&gt;Move the cursor up to mark a wall, and one corner of a ceiling.&lt;br&gt;
+			&lt;/li&gt;&lt;li&gt;Move the cursor across to complete the trapezium.&lt;br&gt;
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_3.jpg&quot;&gt;&lt;p&gt;
+			&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;
+			Congratulations, you've just made your first room!&lt;p&gt;
+			Now that you've made a start you can carry on this process to cover the entire floor with the bottom of rooms.
+			&lt;/p&gt;&lt;ol&gt;
+			&lt;li&gt;Position your cursor on the floor again, next to your existing room.&lt;br&gt;
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_4.jpg&quot;&gt;
+			&lt;/li&gt;&lt;li&gt;Repeat the above process for making a room, noticing that the editor will attempt to snap rooms together for you 
+			so that you don't have to be pixel perfect when aligning rooms.&lt;br&gt;
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_5.jpg&quot;&gt;			
+			&lt;/li&gt;&lt;li&gt;Notice also that the boundary between the two rooms has been coloured green, we'll come to what that means next.
+			&lt;/li&gt;&lt;li&gt;Carry on until you have covered your entire floor.
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_6.jpg&quot;&gt;
+			&lt;/li&gt;&lt;/ol&gt;
+
+			&lt;h3&gt;Define the doors&lt;/h3&gt;
+			The term 'door' when used in relation to the Map Editor means the join between adjacent rooms. In the example above the join 
+			between two rooms went green, this means that the door between these rooms is completely open - everything can pass through.&lt;br&gt;
+			&lt;ol&gt;
+			&lt;li&gt;Use the 'Select' tool to click on a door and highlight it. 
+			&lt;/li&gt;&lt;li&gt;Right-click on the selected door
+			&lt;/li&gt;&lt;li&gt;Select 'Properties'
+			&lt;/li&gt;&lt;/ol&gt;
+			From this dialogue you can set the value for the door - open doors have a value of 100. Completely closed doors have a value of 0 
+			and are coloured in red. Values between 0 and 100 are coloured in shades of orange/yellow. The blue boundaries are also
+			fully closed and wont allow things through them, but they differ in that they mark the edges of the defined world.&lt;br&gt;
+			These door values dictate which agents can pass through them (the PERM value of an agent corresponds to the DOOR value they can pass 
+			through). The values used for creating the maps of Creatures 3 and Docking Station are: 0, 50 and 100. Doors of opening 50 
+			are used for wooden walkways and other areas where you want some agents to be able to move through the boundary, and also want
+			others to treat it as a solid floor.
+			This image from the Workshop in Docking Station shows how a lift-shaft was created with doors of opening 50 - which allows certain 
+			things to move through them. This scheme also allows CA elements to move from one level to the other, as a fully closed boundary 
+			also stops CA elements from moving.&lt;br&gt;
+			&lt;img src=&quot;https://web.archive.org/web/20100103095524im_/http://www.gamewaredevelopment.co.uk/downloads/cdn/making_rooms_7.jpg&quot;&gt;			
+&lt;h3&gt;Give the rooms properties&lt;/h3&gt;
+To get the most out of the engine you are advised to define each room as belonging to a certain &lt;i&gt;type&lt;/i&gt;. Example types are 
+			Atmosphere, Wooden Walkway, Conrete Floor, Boggy Soil ... but there are others. These types are used by the CA system to move 
+			elements around the map (such as water, nutrients, heat) and can also used by agents (such as plants deciding whether they can grow there).&lt;br&gt;
+			&lt;ol&gt;
+			&lt;li&gt;Use the 'Select' tool
+			&lt;/li&gt;&lt;li&gt;Right-click on a room
+			&lt;/li&gt;&lt;li&gt;Select 'Properties'
+			&lt;/li&gt;&lt;li&gt;Click on the 'Room Type' entry
+			&lt;/li&gt;&lt;li&gt;Select the desired room type from the drop down list
+			&lt;/li&gt;&lt;/ol&gt;
+			Below is a list of the defined room types. Note that although the rooms are often defined in terms of the floor of the room, 
+			the room type itself doesn't care what the floor is. It is up to you, the creator, to define the floors and room types consistently.&lt;p&gt;
+			&lt;/p&gt;&lt;table border=&quot;1&quot; cellpadding=&quot;3&quot;&gt;
+				&lt;tbody&gt;&lt;tr&gt;
+					&lt;td&gt;
+Atmosphere
+&lt;/td&gt;
+&lt;td&gt;
+Atmosphere rooms are those that don't have a solid floor, they are open. Elements such as heat and light travel freely while elements such as nutrients and water do not travel through them at all.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+							Wooden Walkway
+					&lt;/td&gt;
+					&lt;td&gt;
+							The floor of these rooms usually corresponds to a wooden walkway. They restrict transport of heat but 
+							allow water to travel freely.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Concrete Walkway
+					&lt;/td&gt;
+					&lt;td&gt;
+							A solid bottomed raised walkway. More restrictive to most CA elements.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Indoor Concrete
+					&lt;/td&gt;
+					&lt;td&gt;
+							An indoor solid floor area. Restrictive to CA elements.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Outdoor Concrete
+					&lt;/td&gt;
+					&lt;td&gt;
+							An outdoor solid floor area. Restrictive to CA elements.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Normal Soil
+					&lt;/td&gt;
+					&lt;td&gt;
+							The standard for soil types. This allows most elements to travel freely.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Boggy Soil
+					&lt;/td&gt;
+					&lt;td&gt;
+							This type loses less water than Normal Soil.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Drained Soil
+					&lt;/td&gt;
+					&lt;td&gt;
+							Another type of soil, this type though loses water faster than the others.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Fresh Water
+					&lt;/td&gt;
+					&lt;td&gt;
+							Used to define underwater, fresh water areas.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Salt Water
+					&lt;/td&gt;
+					&lt;td&gt;
+							Used to define underwater, salt water areas.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;
+							Ettin Home
+					&lt;/td&gt;
+					&lt;td&gt;
+							A very particular kind of room for Ettins to consider home. The smell of machinery in these areas disipates very rapidly.
+					&lt;/td&gt;
+				&lt;/tr&gt;
+			&lt;/tbody&gt;&lt;/table&gt;
+&lt;h3&gt;Inject it into your world&lt;/h3&gt;
+Now that you have defined your new metaroom, and the rooms within it, you can inject it into the game. It is always a good idea to save your work 
+			regularly, so save it now before injecting.&lt;br&gt;
+			Once it is saved, you can then inject it - use the 'Inject as Addon' option to inject your map document into an already running world.&lt;br&gt; 
+			See any difference in your world? Probably not, unless you move the camera to look at your new room! Use the 'Set Metaroom from Game' option from the 
+			Tools menu, from that dialogue you can move the game camera to a particular metaroom ID - or change the background of a metaroom (NOTE: this is for 
+			metarooms that use more than one background file - something not covered in this tutorial yet!).&lt;br&gt;
+			
+			&lt;h3&gt;Making changes and removing metarooms&lt;/h3&gt;
+			&lt;h4&gt;Agents&lt;/h4&gt;
+			It is important to realise that the Map Editor only deals with map information - it can't control agents in the world - and so if you want to remove a metaroom from the game you have to make sure that there are no agents in it. The Map Editor will try to warn you if it detects agents 
+in an area you are trying edit, but it can't remove them for you. You will need to use CAOS to remove the agents, or move them elsewhere. In some cases you may find that the map editor can't remove your metaroom for you - you will need to do it manually with CAOS. There are simple commands for removing rooms and metarooms - DELR and DELM respectively.
+&lt;h4&gt;Links&lt;/h4&gt;
+			There is a CAOS command called LINK - which is used to join specific rooms together such that they can be considered 'linked together' for cellular 
+			automata updates. An example of this is the metaroom for the central hub area of Docking Station - that metaroom has LINKs defined which join 
+			together rooms in that metaroom with a room in the Norn Meso, a room in Comms and a room in the Workshop. This allows smells, heat, nutrients etc 
+			to move beyond a single metaroom and so disperse around the ship as a whole. &lt;br&gt;
+			Problems arise though if you remove a metaroom that has links to another metaroom - big problems in fact, the engine doesn't like it at all. To 
+			resolve this you need to manually remove the links - check out the CAOS Language Guide for the format of the LINK command, and how to use it. The 
+			essential information is that setting a LINK to 0 destroys the link.
+			If this sounds intimidating, don't worry - this is really only relevant if you plan on removing some of the existing rooms in either C3 or DS.
+&lt;br&gt;&lt;hr&gt;&lt;br&gt;
+&lt;b&gt;Topic Keywords:&lt;/b&gt;  creatures3  dockingstation  tutorials  world &lt;br&gt;&lt;br&gt;
+
+&lt;/div&gt;</pre>
 </div>
 <div created="20210603091750286" modified="20210603091801951" tags="eclipse" title="views">
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
