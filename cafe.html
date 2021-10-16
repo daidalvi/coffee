@@ -419,6 +419,8 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
+<li>Add Jungles Metaroom</li>
+
 <li>addInvalidAddressRange</li>
 
 <li>android</li>
@@ -12391,7 +12393,7 @@ Error message and password prompt
 <div created="20210831143028948" creator="z" modified="20210831143029280" modifier="zei" title="$:/status/UserName">
 <pre>zeid</pre>
 </div>
-<div created="20211015151652618" creator="zeid" list="Home DS" modified="20211015151652618" modifier="zeid" title="$:/StoryList">
+<div created="20211016192613570" creator="zeid" list="[[Add Jungles Metaroom]] DS Home" modified="20211016192613570" modifier="zeid" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/snowwhite" description="Centralises the story river" name="Centralised" plugin-type="theme" title="$:/themes/tiddlywiki/centralised" type="application/json" version="5.1.23">
@@ -12596,6 +12598,36 @@ Error message and password prompt
         }
     }
 }</pre>
+</div>
+<div created="20211016192618436" creator="zeid" modified="20211016192640799" modifier="zeid" tags="DS" title="Add Jungles Metaroom">
+<pre>
+```c
+* adding metaroom jungles
+setv va99 addm 400 0 350 500 &quot;jungles&quot;
+
+* fav
+new: simp 1 3 886 &quot;fav_place_jungle&quot; 1 0 1 attr 272 mvto 300 100 cmrt 0 tick 10
+
+* as alternative: adding only one room
+* outv addr  va99 400 750 0 0 500 500
+
+outv addr va99 400 750 0 0 200 200
+rtyp grap 401 1 0
+outv addr va99 400 750 200 200 500 500
+rtyp grap 401 201 0
+
+* creating door between top and bottom level
+door grap 410 190 grap 740 210 0
+
+* adding background
+new: simp 1 1 886 &quot;jungles&quot; 1 0 0 mvto 0 0 
+
+* delr grap 410 210
+
+* inst rtar family genus species stpt seta va00 twin targ 1 mvto x y
+
+```
+</pre>
 </div>
 <div created="20210603084946440" modified="20210603092516949" tags="function cdt" title="addInvalidAddressRange">
 <pre>org.eclipse.cdt.dsf.debug.internal.ui.disassembly.model.`DisassemblyDocument`
