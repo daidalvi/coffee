@@ -200,10 +200,10 @@ class ZGen():
             #    content +=   "\n\n````query\n[list: ("+title+")]\n```\n"
             #elif mtype != "mtype" :
             #    content +=   "\n\n````query\n[tag: "+title+"]\n```\n"
-            if mtype == "code":
-                for t in CODE_LANGS:
-                    if t in tags:
-                        content +=   "\n\n````query\n[tag: ("+t+")]\n```\n"
+            #if mtype == "code":
+            #    for t in CODE_LANGS:
+            #        if t in tags:
+            #            content +=   "\n\n````query\n[tag: ("+t+")]\n```\n"
 
             fdir = os.path.join(self.getRootDir(), ROOT_FOLDER, mpath)
             os.makedirs(fdir, exist_ok=True)
